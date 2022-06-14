@@ -1,0 +1,28 @@
+Health App Plan
+	Overview: Wubo is going to be a health website that allows you to manage your consumption of calories and schedule your workouts.
+
+	Features: 
+* The main feature will be a place on the site where you can schedule your day in accordance with your workout routine.
+o Cards where you can attach more cards to those cards
+o Going to be able to add certain workouts to those cards
+o There is going to be integrated timers into those cards
+o Integrated video to follow along when working out.
+* There will be a section where you can manage your calorie consumption
+o Same cards system as before but know for dieting
+o Able to choose from foods that exist which will show you the calories of those foods.
+o There will also be added nutritional information added to the food.
+o There will be a total sum of the calories and other nutritional information.
+* Possibly a feature where there can be tracking of your body through your webcam and determine if your form in which you work out is being done properly
+o Be able to use your webcam and show live tracking of your body.
+o Run a recording of you doing the workout.
+o Analyze that recording and show you if your form is good or lacking.
+
+	Tools used to create the website:
+Html (create website)
+CSS (decorate the website)
+JavaScript (interactive nature of the website)
+Express (create a server)
+mango DB (create the database for the website)
+Vue or react (for further function of instructiveness with the website)
+
+	Timeline of the project:
