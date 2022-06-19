@@ -89,11 +89,16 @@ body {
   background-color: #2B3451;
   border-radius: 20px;
   padding: 2em;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4em;
+  overflow: auto;
 }
 
 .create-board {
   width: 25vh;
   height: 25%;
+  font-size: 3vh;
   background-color: #929292;
   color: #E8E8E8;
   display: flex;
