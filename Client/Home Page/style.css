@@ -95,9 +95,54 @@ body {
   overflow: auto;
 }
 
-.create-board {
+.create-board-container {
   width: 25vh;
   height: 25%;
+  border-radius: 20px;
+  background-color: #242B43;
+  position: relative;
+}
+
+.create-board-overlay {
+  width: 25vh;
+  height: 100%;
+  border-radius: 20px;
+  background-color: #929292;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  position: absolute;
+}
+
+#create-board {
+  font-size: 1.2vh;
+  border-radius: 20px;
+  width: 20vh;
+  height: 25%;
+  border: none;
+  background-color: #D8D8D8;
+  color: #3B3B3B;
+  padding: 1em;
+}
+
+#create-board-button {
+  font-size: 1.2vh;
+  padding: 1em;
+  border-radius: 20px;
+  width: 10vh;
+  height: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #536398;
+  color: #F9F9F9;
+  border: none;
+}
+
+.create-board {
+  width: 25vh;
+  height: 100%;
   font-size: 3vh;
   background-color: #929292;
   color: #E8E8E8;
@@ -105,4 +150,6 @@ body {
   justify-content: center;
   align-items: center;
   border-radius: 20px;
+  position: absolute;
+  visibility: hidden;
 }
