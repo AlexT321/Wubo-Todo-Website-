@@ -162,7 +162,7 @@ code {
   border: none;
 }
 
-#board-created {
+.board-button {
   width: 25vh;
   height: 100%;
   font-size: 3vh;

@@ -50,6 +50,7 @@ const Create_Board_Button = () => {
     setBoard_name("");
   };
 
+
   useEffect(() => {
     get_Boards();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -58,7 +59,7 @@ const Create_Board_Button = () => {
   return (
     <>
       {boards.map((board, index) => {
-        return <Board name={board.name} key={index} />;
+        return <Board name={board.name} key={index} unique_id={board._id} />;
       })}
       <div id="create-board-container">
         <button
