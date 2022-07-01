@@ -33,6 +33,13 @@ app.post("/Health-Website", (req, res) => {
     })
 });
 
+app.get("/Health-Website", (req, res) => {
+    const board_id = req.query.id;
+    info.find({_id: board_id}).then(IdInfo => {
+        res.json(IdInfo);
+    })
+});
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
