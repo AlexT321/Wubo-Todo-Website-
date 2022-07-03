@@ -1,16 +1,30 @@
 /* eslint-disable react/jsx-pascal-case */
-import Menu_Board_Name from "./Menu_Board_Name";
 import Close_Menu_Button from "./Close_Menu_Button";
 import Home_Button from "./Home_Button";
 import Add_Board_Button from "./Add_Board_Button";
 import Menu_Boards from "./Menu_Boards";
+import {useContext } from "react";
+import {Board_Id_Context} from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
 
-const Side_Menu = () => {
+const Side_Menu = ({ Side_Menu_Visibility, Set_Side_Menu_Visibility }) => {
+  const board_id = useContext(Board_Id_Context);
+  // {board_id.multiple_board_info.map((board, index) => (
+    // <Menu_Boards
+      // key={index}
+      // board_id={board.id}
+      // board_name={board.name}
+    // />
+  // ))}
+
+  // {board_id.single_board_info[0].name}
+
   return (
-    <div id="menu-overlay">
+    <div id="menu-overlay" style={{ visibility: Side_Menu_Visibility }}>
       <div id="menu-header">
-        <Menu_Board_Name />
-        <Close_Menu_Button />
+        <div id="menu-board-name">Boards</div>
+        <Close_Menu_Button
+          Set_Side_Menu_Visibility={Set_Side_Menu_Visibility}
+        />
       </div>
       <Home_Button />
       <div id="menu-header2">

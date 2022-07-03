@@ -1,7 +1,7 @@
 
-const Menu_Boards = () => {
+const Menu_Boards = ({board_id, board_name}) => {
   return (
-    <div id="board-1">Board Name</div>
+    <div id="board-1">{board_name}</div>
   )
 }
 

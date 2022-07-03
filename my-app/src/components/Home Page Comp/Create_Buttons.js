@@ -31,6 +31,7 @@ const Create_Board_Button = ({update_Info, Get_Boards, get_Id}) => {
 
   useEffect(() => {
     Get_Boards(boards, setBoards);
+    console.log("get_boards")
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

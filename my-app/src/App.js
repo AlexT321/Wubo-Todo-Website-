@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-pascal-case */
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./components/Home Page Comp/Header";
 import Create_Buttons from "./components/Home Page Comp/Create_Buttons";
 
@@ -16,12 +16,15 @@ import List_Board_Name from "./components/Board Page Comp/List_Board_Name";
 import List_Board_Options from "./components/Board Page Comp/List_Board_Options";
 import Add_Card from "./components/Board Page Comp/Add_Card";
 
-
 export const Board_Id_Context = React.createContext();
 
 function App() {
   const API = "http://localhost:5000";
   const [board_id_state, set_board_id_state] = useState("");
+  const [Side_Menu_visibility, set_Side_Menu_Visibility] = useState("");
+  const [single_board_data, set_single_board_data] = useState([]);
+  const [multiple_board_data, set_multiple_board_data] = useState([]);
+
   const logo_name = () => {
     console.log("hello world");
   };
@@ -47,20 +50,42 @@ function App() {
     }
   };
 
-  const get_Board_Info = async (board_id) => {
-    const result = await fetch(API + "/Health-Website?id=" + board_id);
+  const get_Single_Board_Info = async (board_id) => {
+    const result = await fetch(API + "/Health-Website/" + board_id);
     const data = await result.json();
-    console.log(data)
+    //console.log(data)
     return data;
-  }
+  };
 
+  const get_Multiple_Board_Info = async () => {
+    const result = await fetch(API + "/Health-Website");
+    const data = await result.json();
+    return data;
+  };
 
   const get_Id = (id) => {
-    console.log(id);
+    //console.log(id);
     set_board_id_state(id);
-    console.log(board_id_state);
-
+    //console.log(board_id_state);
   };
+
+  const load_board_data = async (board_identification) => {
+    const single_board_data1 = await get_Single_Board_Info(
+      board_identification
+    );
+    const multiple_board_data1 = await get_Multiple_Board_Info();
+    set_single_board_data(single_board_data1);
+    set_multiple_board_data(multiple_board_data1);
+    
+    
+  };
+
+  useEffect(() => {
+    load_board_data(board_id_state);
+    console.log("load_board_data")
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [board_id_state]);
+
   return (
     <Router>
       <Routes>
@@ -77,6 +102,7 @@ function App() {
                       update_Info={update_info}
                       Get_Boards={get_Boards}
                       get_Id={get_Id}
+                      
                     />
                   </div>
                 </div>
@@ -87,14 +113,24 @@ function App() {
         <Route
           path="/:boardName"
           element={
-            <Board_Id_Context.Provider value={board_id_state}>
+            <Board_Id_Context.Provider
+              value={{
+                single_board_info: single_board_data,
+                multiple_board_info: multiple_board_data,
+              }}
+            >
               <div className="App">
                 <div id="container-2">
-                  <Board_Header />
+                  <Board_Header board_id_state={board_id_state} load_board_data={load_board_data}/>
                   <div id="header2-content-body-container">
-                    <Side_Menu />
+                    <Side_Menu
+                      Side_Menu_Visibility={Side_Menu_visibility}
+                      Set_Side_Menu_Visibility={set_Side_Menu_Visibility}
+                    />
                     <ProfileOverlay />
-                    <Board_Header_2 Board_Name_Info={get_Board_Info} />
+                    <Board_Header_2
+                      Set_Side_Menu_Visibility={set_Side_Menu_Visibility}
+                    />
                     <div id="content-body2">
                       <Create_List />
                       <div id="create-list-overlay">

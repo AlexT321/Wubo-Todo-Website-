@@ -2,15 +2,21 @@
 import Logo2 from "./logo2";
 import Logo_Name2 from "./logo_name2";
 import Profile_Pic2 from "./profile_pic2";
-import {useContext} from "react";
+import {useContext, useEffect} from "react";
 import {Board_Id_Context} from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App"
 
 
-const Board_Header = () => {
+const Board_Header = ({board_id_state, load_board_data}) => {
   const board_id = useContext(Board_Id_Context);
+
   const check_id = () => {
     console.log(board_id);
   }
+
+  useEffect(() => {
+    console.log("board_header 7668 86668 8686")
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <div id="Board-header">
       <div id="logo-container-2">
