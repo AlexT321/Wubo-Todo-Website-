@@ -35,7 +35,7 @@ function App() {
     setBoards([...boards, ...data]);
   };
 
-  const update_info = async (update_Information) => {
+  const create_board = async (update_Information) => {
     try {
       const result = await fetch(API + "/Health-Website", {
         method: "POST",
@@ -50,18 +50,47 @@ function App() {
     }
   };
 
-  const get_Single_Board_Info = async (board_id) => {
-    const result = await fetch(API + "/Health-Website/" + board_id);
-    const data = await result.json();
-    //console.log(data)
-    return data;
-  };
-
   const get_Multiple_Board_Info = async () => {
     const result = await fetch(API + "/Health-Website");
     const data = await result.json();
     return data;
   };
+
+  const update_all_choosen_state = async (update_information) => {
+    try {
+      const result = await fetch(API + "/Health-Website/update_all_choosen_state", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(update_information)
+      });
+      const data = result.json();
+    } catch(err) {
+      console.log(err)
+    }
+  }
+
+  const update_choosen_state = async (board_id) => {
+    try {
+      const result = await fetch(API + "/Health-Website/update_choosen_state", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(board_id)
+      });
+      const data = result.json();
+    } catch(err) {
+
+    }
+  }
+
+  const get_Single_Board = async () => {
+    const result = await fetch(API + "/Health-Website/Single_Board");
+    const data = await result.json();
+    return data;
+  }
 
   const get_Id = (id) => {
     //console.log(id);
@@ -69,22 +98,18 @@ function App() {
     //console.log(board_id_state);
   };
 
-  const load_board_data = async (board_identification) => {
-    const single_board_data1 = await get_Single_Board_Info(
-      board_identification
-    );
+  const load_board_data = async () => {
+    const single_board_data1 = await get_Single_Board();
     const multiple_board_data1 = await get_Multiple_Board_Info();
     set_single_board_data(single_board_data1);
     set_multiple_board_data(multiple_board_data1);
     
-    
   };
 
   useEffect(() => {
-    load_board_data(board_id_state);
-    console.log("load_board_data")
+    load_board_data();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [board_id_state]);
+  }, []);
 
   return (
     <Router>
@@ -99,9 +124,11 @@ function App() {
                   <div id="Your-Boards">Your Boards</div>
                   <div id="Boards-container">
                     <Create_Buttons
-                      update_Info={update_info}
+                      create_board={create_board}
                       Get_Boards={get_Boards}
                       get_Id={get_Id}
+                      update_all_choosen_state={update_all_choosen_state}
+                      update_choosen_state={update_choosen_state}
                       
                     />
                   </div>
@@ -130,6 +157,7 @@ function App() {
                     <ProfileOverlay />
                     <Board_Header_2
                       Set_Side_Menu_Visibility={set_Side_Menu_Visibility}
+                      load_board_data={load_board_data}
                     />
                     <div id="content-body2">
                       <Create_List />

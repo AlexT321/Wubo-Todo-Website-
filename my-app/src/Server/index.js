@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 5000;
 
 const db = monk(process.env.MONGO_URI || 'localhost/Health-Website');
 const info = db.get("Boards");
-const info2 = db.get("Global_Board_Id");
+
 
 app.use(cors());
 app.use(express.json());
@@ -32,11 +32,38 @@ app.post("/Health-Website/update", (req, res) => {
 app.post("/Health-Website", (req, res) => {
     const name = {
         name: req.body.name,
+        choosen: req.body.choosen,
     }
     info.insert(name).then((nameInfo) => {
         res.json(nameInfo);
     })
 });
+
+app.post("/Health-Website/update_all_choosen_state", (req, res) => {
+    const choosen = {
+        id: req.body.id,
+        choosen: req.body.choosen,
+    }
+    info.update(choosen.id,choosen.choosen, {multi: true}).then((information) => {
+        res.json(information);
+    })
+})
+
+app.post("/Health-Website/update_choosen_state", (req, res) => {
+    const choosen = {
+        id: req.body.id,
+        choosen: req.body.choosen,
+    }
+    info.update(choosen.id, choosen.choosen).then((infomation) => {
+        res.json(infomation);
+    })
+})
+
+app.get("/Health-Website/Single_Board", (req, res) => {
+    info.find({choosen : true}).then((informations) => {
+        res.json(informations);
+    })
+})
 
 app.get("/Health-Website/:id", (req, res) => {
     const board_id = req.params.id;
@@ -44,17 +71,6 @@ app.get("/Health-Website/:id", (req, res) => {
         res.json(board_info);
     });
 });
-
-app.post("/Health-Website/Board_Id", (req, res) => {
-    
-})
-
-app.get("Health-Website/Board_Id", (req, res) => {
-    info2.find().then(board_id => {
-        res.json(board_id);
-    })
-})
-
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

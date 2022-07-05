@@ -14,7 +14,6 @@ const Board_Header = ({board_id_state, load_board_data}) => {
   }
 
   useEffect(() => {
-    console.log("board_header 7668 86668 8686")
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
