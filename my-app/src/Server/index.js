@@ -1,8 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const monk = require('monk');
-const mongo = require('mongodb');
-const mongoose = require('mongoose');
 const app = express();
 const PORT = process.env.PORT || 5000;
 

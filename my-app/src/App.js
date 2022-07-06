@@ -148,7 +148,7 @@ function App() {
             >
               <div className="App">
                 <div id="container-2">
-                  <Board_Header board_id_state={board_id_state} load_board_data={load_board_data}/>
+                  <Board_Header />
                   <div id="header2-content-body-container">
                     <Side_Menu
                       Side_Menu_Visibility={Side_Menu_visibility}
@@ -157,7 +157,6 @@ function App() {
                     <ProfileOverlay />
                     <Board_Header_2
                       Set_Side_Menu_Visibility={set_Side_Menu_Visibility}
-                      load_board_data={load_board_data}
                     />
                     <div id="content-body2">
                       <Create_List />

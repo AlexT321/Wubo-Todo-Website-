@@ -37,12 +37,14 @@
     width: 2vh;
     height: 50%;
     background-color: #2A457A;
+    cursor: pointer;
   }
   
-  #name-2 {
+  #logo-name-2 {
     font-size: 2.5vh;
     color: #FFFFFF;
     font-family: "Roboto", sans-serif;
+    cursor: pointer;
   }
   
   #profile-container-2 {
@@ -100,6 +102,7 @@
     justify-content: center;
     align-items: center;
     border: none;
+    cursor: pointer;
   }
   
   #home-button {
@@ -112,6 +115,7 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 5vh;
+    cursor: pointer;
   }
   
   #menu-header2 {
@@ -210,6 +214,7 @@
     justify-content: center;
     color: #FFFFFF;
     border: none;
+    cursor: pointer;
   }
   
   #name-of-board {

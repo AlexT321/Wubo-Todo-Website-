@@ -4,7 +4,6 @@ import {Board_Id_Context} from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (H
 
 const Name_of_Board = () => {
   const board_id = useContext(Board_Id_Context);
-  console.log(board_id)
   //{board_id.single_board_info[0].name}
   useEffect(() => {
    

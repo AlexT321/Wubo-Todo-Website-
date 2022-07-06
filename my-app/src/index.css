@@ -145,6 +145,7 @@ code {
   background-color: #536398;
   color: #F9F9F9;
   border: none;
+  cursor: pointer;
 }
 
 #create-board {
@@ -160,6 +161,7 @@ code {
   border-radius: 20px;
   position: absolute;
   border: none;
+  cursor: pointer;
 }
 
 .board-button {
@@ -175,5 +177,6 @@ code {
   border-radius: 20px;
   position: relative;
   border: none;
+  cursor: pointer;
 }
 
