@@ -20,7 +20,6 @@ export const Board_Id_Context = React.createContext();
 
 function App() {
   const API = "http://localhost:5000";
-  const [board_id_state, set_board_id_state] = useState("");
   const [Side_Menu_visibility, set_Side_Menu_Visibility] = useState("");
   const [single_board_data, set_single_board_data] = useState([]);
   const [multiple_board_data, set_multiple_board_data] = useState([]);
@@ -32,6 +31,7 @@ function App() {
   const get_Boards = async (boards, setBoards) => {
     const result = await fetch(API + "/Health-Website");
     const data = await result.json();
+    setBoards([]);
     setBoards([...boards, ...data]);
   };
 
@@ -92,11 +92,6 @@ function App() {
     return data;
   }
 
-  const get_Id = (id) => {
-    //console.log(id);
-    set_board_id_state(id);
-    //console.log(board_id_state);
-  };
 
   const load_board_data = async () => {
     const single_board_data1 = await get_Single_Board();
@@ -126,9 +121,9 @@ function App() {
                     <Create_Buttons
                       create_board={create_board}
                       Get_Boards={get_Boards}
-                      get_Id={get_Id}
                       update_all_choosen_state={update_all_choosen_state}
                       update_choosen_state={update_choosen_state}
+                      load_board_data={load_board_data}
                       
                     />
                   </div>

@@ -11,7 +11,7 @@ const Side_Menu = ({ Side_Menu_Visibility, Set_Side_Menu_Visibility }) => {
 
 
   if (board_id.multiple_board_info.length === 0 || board_id.single_board_info.length === 0) {
-    return <div id="name-of-board">Loading...</div>;
+    return <div id="menu-overlay">Loading...</div>;
   }
 
   return (

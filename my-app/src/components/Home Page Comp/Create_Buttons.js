@@ -2,7 +2,13 @@ import { useState } from "react";
 import { useEffect } from "react";
 import Board from "./Board";
 
-const Create_Board_Button = ({create_board, Get_Boards, get_Id, update_all_choosen_state, update_choosen_state}) => {
+const Create_Board_Button = ({
+  create_board,
+  Get_Boards,
+  update_all_choosen_state,
+  update_choosen_state,
+  load_board_data,
+}) => {
   const [visibilityState_cb_btn, setVisibilityState] = useState("visible");
   const [visibilityState_cb_input, setVisibilityState_input] =
     useState("hidden");
@@ -30,14 +36,25 @@ const Create_Board_Button = ({create_board, Get_Boards, get_Id, update_all_choos
 
 
   useEffect(() => {
-    Get_Boards(boards, setBoards);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (boards.length === 0) {
+      Get_Boards(boards, setBoards);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
       {boards.map((board, index) => {
-        return <Board name={board.name} key={index} unique_id={board._id} get_Id={get_Id} update_all_choosen_state={update_all_choosen_state} update_choosen_state={update_choosen_state} />;
+        return (
+          <Board
+            name={board.name}
+            key={index}
+            unique_id={board._id}
+            update_all_choosen_state={update_all_choosen_state}
+            update_choosen_state={update_choosen_state}
+            load_board_data={load_board_data}
+          />
+        );
       })}
       <div id="create-board-container">
         <button
