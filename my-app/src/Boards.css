@@ -222,6 +222,12 @@
     color: #FFFFFF;
     font-family: "Roboto", sans-serif;
   }
+
+  #name-of-board2 {
+    font-size: 2.5vh;
+    color: #333333;
+    font-family: "Roboto", sans-serif;
+  }
   
   #favorite-button {
     width: 3vh;

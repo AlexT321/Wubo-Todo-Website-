@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Board from "./Board";
 
 const Create_Board_Button = ({
@@ -9,9 +9,9 @@ const Create_Board_Button = ({
   update_choosen_state,
   load_board_data,
 }) => {
+  const ref = useRef(null);
   const [visibilityState_cb_btn, setVisibilityState] = useState("visible");
-  const [visibilityState_cb_input, setVisibilityState_input] =
-    useState("hidden");
+  const [visibilityState_cb_input, setVisibilityState_input] = useState("hidden");
   const onClick = () => {
     setVisibilityState(
       visibilityState_cb_btn === "visible" ? "hidden" : "visible"
@@ -39,6 +39,15 @@ const Create_Board_Button = ({
     if (boards.length === 0) {
       Get_Boards(boards, setBoards);
     }
+
+    const handleClickOutside = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) {
+        setVisibilityState("visible");
+        setVisibilityState_input("hidden");
+      }
+    }
+
+    document.addEventListener("click", handleClickOutside);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -56,7 +65,7 @@ const Create_Board_Button = ({
           />
         );
       })}
-      <div id="create-board-container">
+      <div ref={ref} id="create-board-container" >
         <button
           id="create-board"
           onClick={onClick}

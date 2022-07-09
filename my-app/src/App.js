@@ -44,6 +44,7 @@ function App() {
         },
         body: JSON.stringify(update_Information),
       });
+      // eslint-disable-next-line no-unused-vars
       const data = result.json();
     } catch (err) {
       console.log(err);
@@ -58,18 +59,22 @@ function App() {
 
   const update_all_choosen_state = async (update_information) => {
     try {
-      const result = await fetch(API + "/Health-Website/update_all_choosen_state", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(update_information)
-      });
+      const result = await fetch(
+        API + "/Health-Website/update_all_choosen_state",
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(update_information),
+        }
+      );
+      // eslint-disable-next-line no-unused-vars
       const data = result.json();
-    } catch(err) {
-      console.log(err)
+    } catch (err) {
+      console.log(err);
     }
-  }
+  };
 
   const update_choosen_state = async (board_id) => {
     try {
@@ -78,32 +83,29 @@ function App() {
         headers: {
           "content-type": "application/json",
         },
-        body: JSON.stringify(board_id)
+        body: JSON.stringify(board_id),
       });
+      // eslint-disable-next-line no-unused-vars
       const data = result.json();
-    } catch(err) {
-
-    }
-  }
+    } catch (err) {}
+  };
 
   const get_Single_Board = async () => {
     const result = await fetch(API + "/Health-Website/Single_Board");
     const data = await result.json();
     return data;
-  }
-
+  };
 
   const load_board_data = async () => {
     const single_board_data1 = await get_Single_Board();
     const multiple_board_data1 = await get_Multiple_Board_Info();
     set_single_board_data(single_board_data1);
     set_multiple_board_data(multiple_board_data1);
-    
   };
 
   useEffect(() => {
     load_board_data();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -124,7 +126,6 @@ function App() {
                       update_all_choosen_state={update_all_choosen_state}
                       update_choosen_state={update_choosen_state}
                       load_board_data={load_board_data}
-                      
                     />
                   </div>
                 </div>
@@ -143,7 +144,7 @@ function App() {
             >
               <div className="App">
                 <div id="container-2">
-                  <Board_Header />
+                  <Board_Header load_board_data={load_board_data} />
                   <div id="header2-content-body-container">
                     <Side_Menu
                       Side_Menu_Visibility={Side_Menu_visibility}
