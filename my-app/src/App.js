@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-pascal-case */
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React, {useState} from "react";
 import Header from "./components/Home Page Comp/Header";
 import Create_Buttons from "./components/Home Page Comp/Create_Buttons";
 
@@ -87,7 +87,9 @@ function App() {
       });
       // eslint-disable-next-line no-unused-vars
       const data = result.json();
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const get_Single_Board = async () => {
@@ -102,11 +104,6 @@ function App() {
     set_single_board_data(single_board_data1);
     set_multiple_board_data(multiple_board_data1);
   };
-
-  useEffect(() => {
-    load_board_data();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <Router>

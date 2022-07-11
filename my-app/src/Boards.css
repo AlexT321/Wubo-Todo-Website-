@@ -221,6 +221,18 @@
     font-size: 2.5vh;
     color: #FFFFFF;
     font-family: "Roboto", sans-serif;
+    padding: 0.1em;
+  }
+
+  #name-of-board:hover {
+    background-color: rgba(124, 124, 124, 0.52);
+
+  }
+
+  #span-of-name-of-board:focus {
+    color: rgb(0, 0, 0);
+    background-color: #FFFFFF;
+    outline: none;
   }
 
   #name-of-board2 {

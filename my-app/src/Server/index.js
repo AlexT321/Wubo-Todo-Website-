@@ -57,6 +57,16 @@ app.post("/Health-Website/update_choosen_state", (req, res) => {
     })
 })
 
+app.post("/Health-Website/update_board_name", (req, res) => {
+    const name = {
+        id: req.body.id,
+        name: req.body.name,
+    }
+    info.update(name.id, name.name).then((information) => {
+        res.json(information);
+    });
+});
+
 app.get("/Health-Website/Single_Board", (req, res) => {
     info.find({choosen : true}).then((informations) => {
         res.json(informations);
