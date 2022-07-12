@@ -3,11 +3,11 @@ import Side_Menu_Button from "./Side_Menu_Button";
 import Name_of_Board from "./Name_of_Board";
 import Favorite_Button from "./Favorite_Button";
 
-const Board_Header_2 = ({ Set_Side_Menu_Visibility, move_content_to_right}) => {
+const Board_Header_2 = ({ Set_Side_Menu_Visibility, move_content_to_right, set_move_content_to_right}) => {
 
   return (
-    <div id="header-2" style={{left: "0vh"}}>
-      <Side_Menu_Button Set_Side_Menu_Visibility={Set_Side_Menu_Visibility} />
+    <div id="header-2" style={{left: move_content_to_right}}>
+      <Side_Menu_Button Set_Side_Menu_Visibility={Set_Side_Menu_Visibility} set_move_content_to_right={set_move_content_to_right}/>
       <Name_of_Board />
       <Favorite_Button />
     </div>

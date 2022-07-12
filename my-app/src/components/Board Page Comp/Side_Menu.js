@@ -10,6 +10,7 @@ const Side_Menu = ({
   Side_Menu_Visibility,
   Set_Side_Menu_Visibility,
   create_board,
+  set_move_content_to_right,
 }) => {
   const board_id = useContext(Board_Id_Context);
   const [add_board_visibility, set_add_board_visibility] = useState("hidden");
@@ -48,6 +49,7 @@ const Side_Menu = ({
         <Close_Menu_Button
           Set_Side_Menu_Visibility={Set_Side_Menu_Visibility}
           set_add_board_visibility={set_add_board_visibility}
+          set_move_content_to_right={set_move_content_to_right}
         />
       </div>
       <Home_Button />

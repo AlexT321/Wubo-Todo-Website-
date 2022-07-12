@@ -148,11 +148,13 @@ function App() {
                       Side_Menu_Visibility={Side_Menu_visibility}
                       Set_Side_Menu_Visibility={set_Side_Menu_Visibility}
                       create_board={create_board}
+                      set_move_content_to_right={set_move_content_to_right}
                     />
                     <ProfileOverlay />
                     <Board_Header_2
                       Set_Side_Menu_Visibility={set_Side_Menu_Visibility}
                       move_content_to_right={move_content_to_right}
+                      set_move_content_to_right={set_move_content_to_right}
                     />
                     <div id="content-body2" style={{left: move_content_to_right}}>
                       <Create_List />
