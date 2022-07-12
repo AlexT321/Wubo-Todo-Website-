@@ -23,6 +23,7 @@ function App() {
   const [Side_Menu_visibility, set_Side_Menu_Visibility] = useState("");
   const [single_board_data, set_single_board_data] = useState([]);
   const [multiple_board_data, set_multiple_board_data] = useState([]);
+  const [move_content_to_right, set_move_content_to_right] = useState("0vh");
 
   const logo_name = () => {
     console.log("hello world");
@@ -146,12 +147,14 @@ function App() {
                     <Side_Menu
                       Side_Menu_Visibility={Side_Menu_visibility}
                       Set_Side_Menu_Visibility={set_Side_Menu_Visibility}
+                      create_board={create_board}
                     />
                     <ProfileOverlay />
                     <Board_Header_2
                       Set_Side_Menu_Visibility={set_Side_Menu_Visibility}
+                      move_content_to_right={move_content_to_right}
                     />
-                    <div id="content-body2">
+                    <div id="content-body2" style={{left: move_content_to_right}}>
                       <Create_List />
                       <div id="create-list-overlay">
                         <Create_List_Input />
