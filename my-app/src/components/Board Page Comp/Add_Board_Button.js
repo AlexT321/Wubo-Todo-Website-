@@ -1,9 +1,7 @@
-import {useContext, forwardRef } from "react";
-import {Board_Id_Context} from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
-
+import { forwardRef } from "react";
 
 const Add_Board_Button = forwardRef(({ set_add_board_visibility, add_board_ref}, ref) => {
-  const board_id = useContext(Board_Id_Context);
+
 
   const onClick = () => {
     set_add_board_visibility("visible");
