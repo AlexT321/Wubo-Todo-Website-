@@ -31,6 +31,7 @@ app.post("/Health-Website", (req, res) => {
     const name = {
         name: req.body.name,
         choosen: req.body.choosen,
+        favorite: req.body.favorite,
     }
     info.insert(name).then((nameInfo) => {
         res.json(nameInfo);
@@ -78,6 +79,17 @@ app.get("/Health-Website/:id", (req, res) => {
     info.find({_id: board_id}).then((board_info) => {
         res.json(board_info);
     });
+});
+
+app.post("/Health-Website/update_favorite_state", (req, res) => {
+    const favorite = {
+        id: req.body.id,
+        favorite: req.body.favorite,
+    }
+    info.update(favorite.id, favorite.favorite).then((information) => {
+        res.json(information);
+    })
+
 });
 
 app.listen(PORT, () => {

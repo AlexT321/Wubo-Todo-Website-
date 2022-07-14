@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-pascal-case */
-import "./App.css";
+import "./assets/App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import React, {useState} from "react";
 import Header from "./components/Home Page Comp/Header";
@@ -138,6 +138,8 @@ function App() {
               value={{
                 single_board_info: single_board_data,
                 multiple_board_info: multiple_board_data,
+                set_single_board_info: set_single_board_data,
+                set_multiple_board_info: set_multiple_board_data,
               }}
             >
               <div className="App">
@@ -149,6 +151,9 @@ function App() {
                       Set_Side_Menu_Visibility={set_Side_Menu_Visibility}
                       create_board={create_board}
                       set_move_content_to_right={set_move_content_to_right}
+                      update_all_choosen_state={update_all_choosen_state}
+                      update_choosen_state={update_choosen_state}
+                      load_board_data={load_board_data}
                     />
                     <ProfileOverlay />
                     <Board_Header_2

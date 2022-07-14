@@ -11,7 +11,7 @@
     width: 100%;
     height: 100%;
     position: absolute;
-    background: url(images/space.jpg) no-repeat center center fixed;
+    background: url(../assets/board_background_images/space.jpg) no-repeat center center fixed;
     background-size: cover;
   }
   
@@ -159,6 +159,10 @@
     color: #ffffff;
   }
 
+  #board-1 {
+    cursor: pointer;
+  }
+
   #add-board {
     width: 100%;
     height: 1.2vh;
@@ -242,6 +246,7 @@
     color: #FFFFFF;
     font-family: "Roboto", sans-serif;
     padding: 0.1em;
+    cursor: pointer;
   }
 
   #name-of-board:hover {
@@ -266,8 +271,8 @@
     height: 3vh;
     background-color: #323C5B;
     border-radius: 5px;
-    color: #FFFFFF;
     border: none;
+    cursor: pointer;
   }
 
   #content-body2 {

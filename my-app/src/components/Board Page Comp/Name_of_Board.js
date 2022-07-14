@@ -1,4 +1,4 @@
-import { useContext, useRef, useEffect } from "react";
+import { useContext, useRef, useEffect, useState } from "react";
 import { Board_Id_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
 
 const Name_of_Board = () => {
@@ -35,20 +35,21 @@ const Name_of_Board = () => {
         };
         update_name(update_name_of_board);
         for (let i = 0; i < board_id.multiple_board_info.length; i++) {
-          if (board_id.single_board_info[0].name === board_id.multiple_board_info[i].name) {
+          if (board_id.single_board_info[0]._id === board_id.multiple_board_info[i]._id) {
             board_id.multiple_board_info[i].name = board_name.current.innerText;
           }
         }
-        board_id.single_board_info[0].name = board_name.current.innerText;
+        //board_id.single_board_info[0].name = board_name.current.innerText;
+        //use set_single_board_info and update the board_id.single_board_info with the new name
+        board_id.set_single_board_info([{...board_id.single_board_info[0], name: board_name.current.innerText}]);
+        //board_id.set_single_board_info(board_id.single_board_info);
         board_name.current.blur();
+  
       }
     }
   };
 
   useEffect(() => {
-    if (board_id.single_board_info.length > 0) {
-      
-    }
     const handleClickOutside = (e) => {
       if (ref.current && !ref.current.contains(e.target)) {
         //set the board name to Health

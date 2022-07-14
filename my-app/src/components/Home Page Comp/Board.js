@@ -4,7 +4,6 @@ const Board = ({ name, unique_id, update_all_choosen_state, update_choosen_state
   const navigate = useNavigate();
   const onClick = () => {
     navigate(`/${name}`);
-    //update_all_choosen_state({ choosen: false });
     const update_info = {
       id: {_id: unique_id},
       choosen: {$set: {choosen: true}}
