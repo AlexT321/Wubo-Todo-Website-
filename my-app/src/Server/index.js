@@ -32,6 +32,8 @@ app.post("/Health-Website", (req, res) => {
         name: req.body.name,
         choosen: req.body.choosen,
         favorite: req.body.favorite,
+        board_list: req.body.board_list,
+        date: req.body.date
     }
     info.insert(name).then((nameInfo) => {
         res.json(nameInfo);
@@ -89,7 +91,16 @@ app.post("/Health-Website/update_favorite_state", (req, res) => {
     info.update(favorite.id, favorite.favorite).then((information) => {
         res.json(information);
     })
+});
 
+app.post("/Health-Website/create_board_list", (req, res) => {
+    const board_list = {
+        id: req.body.id,
+        board_list: req.body.board_list,
+    }
+    info.update(board_list.id, board_list.board_list).then((information) => {
+        res.json(information);
+    });
 });
 
 app.listen(PORT, () => {

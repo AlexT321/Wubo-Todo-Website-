@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 const Board = ({ name, unique_id, update_all_choosen_state, update_choosen_state, load_board_data}) => {
   const navigate = useNavigate();
-  const onClick = () => {
+  const onClick = async () => {
     navigate(`/${name}`);
     const update_info = {
       id: {_id: unique_id},
@@ -12,9 +12,9 @@ const Board = ({ name, unique_id, update_all_choosen_state, update_choosen_state
       id: {},
       choosen: {$set: {choosen: false}}
     }
-    update_all_choosen_state(update_all_info);
-    update_choosen_state(update_info);
-    load_board_data();
+    await update_all_choosen_state(update_all_info);
+    await update_choosen_state(update_info);
+    await load_board_data();
 
   };
   return (

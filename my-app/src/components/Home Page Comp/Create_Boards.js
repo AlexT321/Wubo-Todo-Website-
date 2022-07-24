@@ -30,9 +30,8 @@ const Create_Board_Button = ({
     setVisibilityState_input("hidden");
     setVisibilityState("visible");
 
-    create_board({ name: board_name, choosen: false, favorite: false });
+    create_board({ name: board_name, choosen: false, favorite: false, board_list:[], date: new Date()});
     setBoard_name("");
-    console.log(boards);
   };
 
   boards.sort((a, b) => {

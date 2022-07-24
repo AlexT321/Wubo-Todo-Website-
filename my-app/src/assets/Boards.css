@@ -3,6 +3,49 @@
     padding: 0px;
     box-sizing: border-box;
   }
+
+  :root {
+    --primary: #929292;
+    --secondary: #323C5B;
+    
+  }
+
+  .btn {
+    cursor: pointer;
+  }
+
+  /* styles */
+
+  .btn--primary--solid {
+    background-color: var(--primary);
+    border: none;
+    color: #fff;
+  }
+
+  .btn--primary--solid:hover {
+    background-color: #afafaf;
+  }
+
+  .btn--secondary--solid {
+    background-color: var(--secondary);
+    border: none;
+    color: #fff;
+  }
+
+  .btn--secondary--solid:hover {
+    background-color: #3b55a3;
+  }
+
+  /* sizes */
+  .btn--tiny {
+    width: 2vh;
+    height: 2vh;
+  }
+
+  .btn--small {
+    width: 3vh;
+    height: 3vh;
+  }
   
   #container-2 {
     display: flex;
@@ -93,16 +136,10 @@
   }
   
   #close-menu-button {
-    width: 2vh;
-    height: 2vh;
-    background-color: #646464;
-    color: #ffffff;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: none;
-    cursor: pointer;
   }
   
   #home-button {
@@ -135,18 +172,9 @@
   }
   
   #add-board-button {
-    width: 2vh;
-    height: 2vh;
-    color: #ffffff;
-    background-color: rgb(50,60,91,0.72);
     display: flex;
     justify-content: center;
     align-items: center;
-    border: none;
-  }
-
-  #add-board-button:hover {
-    background-color: #2A457A;
   }
   
   #boards-container {
@@ -227,18 +255,11 @@
   }
   
   #side-menu-button {
-    width: 3vh;
-    height: 3vh;
-    background-color: #323C5B;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #FFFFFF;
-    border: none;
-    cursor: pointer;
     position: relative;
-   
   }
   
   #name-of-board {
@@ -267,18 +288,19 @@
   }
   
   #favorite-button {
-    width: 3vh;
-    height: 3vh;
-    background-color: #323C5B;
     border-radius: 5px;
-    border: none;
-    cursor: pointer;
   }
 
   #content-body2 {
     width: 100%;
     height: 100%;
     padding: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+  }
+
+  #Board_List_Container {
     position: relative;
   }
   
@@ -294,9 +316,9 @@
     justify-content: flex-start;
     opacity: 0.7;
     padding: 0.8rem;
+    margin-left: 1em;
     color: #fffefe;
     position: absolute;
-    /* visibility: hidden; */
   }
   
   #create-list-overlay {
@@ -310,7 +332,7 @@
     flex-direction: column;
     position: absolute;
     gap: 0.5rem;
-    visibility: hidden;
+    margin-left: 1em;
   }
   
   .create-list-input {
@@ -333,6 +355,7 @@
     align-items: center;
     justify-content: center;
     padding: 0.8rem;
+    cursor: pointer;
     color: #fffefe;
     border: none;
   }
@@ -351,9 +374,7 @@
     padding: 1rem;
     border-radius: 10px;
     background-color: #DEDEDE;
-    margin: 0.5rem;
     position: relative;
-    visibility: hidden;
   }
   
   #board-header-container {

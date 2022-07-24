@@ -1,22 +1,18 @@
 /* eslint-disable react/jsx-pascal-case */
 import "./assets/App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import React, {useState} from "react";
+import {useState, createContext} from "react";
+
 import Header from "./components/Home Page Comp/Header";
-import Create_Buttons from "./components/Home Page Comp/Create_Buttons";
+import Create_Buttons from "./components/Home Page Comp/Create_Boards";
 
 import Board_Header from "./components/Board Page Comp/Board_Header";
 import Side_Menu from "./components/Board Page Comp/Side_Menu";
 import ProfileOverlay from "./components/Board Page Comp/profile_overlay";
 import Board_Header_2 from "./components/Board Page Comp/Board_Header_2";
-import Create_List from "./components/Board Page Comp/Create_List";
-import Create_List_Input from "./components/Board Page Comp/Create_List_Input";
-import Create_List_Button from "./components/Board Page Comp/Create_List_Button";
-import List_Board_Name from "./components/Board Page Comp/List_Board_Name";
-import List_Board_Options from "./components/Board Page Comp/List_Board_Options";
-import Add_Card from "./components/Board Page Comp/Add_Card";
+import Create_List from "./components/Board Page Comp/Board_List";
 
-export const Board_Id_Context = React.createContext();
+export const Board_Context = createContext();
 
 function App() {
   const API = "http://localhost:5000";
@@ -25,9 +21,6 @@ function App() {
   const [multiple_board_data, set_multiple_board_data] = useState([]);
   const [move_content_to_right, set_move_content_to_right] = useState("0vh");
 
-  const logo_name = () => {
-    console.log("hello world");
-  };
 
   const get_Boards = async (boards, setBoards) => {
     const result = await fetch(API + "/Health-Website");
@@ -114,7 +107,7 @@ function App() {
           element={
             <div className="App">
               <div id="container">
-                <Header logo_name={logo_name} />
+                <Header />
                 <div id="content-body">
                   <div id="Your-Boards">Your Boards</div>
                   <div id="Boards-container">
@@ -134,7 +127,7 @@ function App() {
         <Route
           path="/:boardName"
           element={
-            <Board_Id_Context.Provider
+            <Board_Context.Provider
               value={{
                 single_board_info: single_board_data,
                 multiple_board_info: multiple_board_data,
@@ -163,22 +156,11 @@ function App() {
                     />
                     <div id="content-body2" style={{left: move_content_to_right}}>
                       <Create_List />
-                      <div id="create-list-overlay">
-                        <Create_List_Input />
-                        <Create_List_Button />
-                      </div>
-                      <div id="board">
-                        <div id="board-header-container">
-                          <List_Board_Name />
-                          <List_Board_Options />
-                        </div>
-                        <Add_Card />
-                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </Board_Id_Context.Provider>
+            </Board_Context.Provider>
           }
         ></Route>
       </Routes>
