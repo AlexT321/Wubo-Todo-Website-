@@ -1,15 +1,15 @@
 import { useState, useRef, useContext, useEffect } from "react";
 import { Board_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
-import List from "./List"
+import List from "./List";
 
 const Create_List = () => {
   const Board = useContext(Board_Context);
 
   const [list_visibility, set_list_visibility] = useState("hidden");
-  const [create_list_visibility, set_create_list_visibility] = useState("visible");
+  const [create_list_visibility, set_create_list_visibility] =
+    useState("visible");
 
   const [list_name, set_list_name] = useState("");
-  const [board_lists, set_board_lists] = useState([]);
 
   const create_list = useRef(null);
   const create_list_overlay = useRef(null);
@@ -51,12 +51,22 @@ const Create_List = () => {
   };
 
   const create_list_component = () => {
+    const random_number = Math.floor(Math.random() * 100);
     const list = {
       id: { _id: Board.single_board_info[0]._id },
-      board_list: { $push: { board_list: { name: list_name} } },
+      board_lists: { $push: { board_lists: { unique_id: random_number, name: list_name, cards: [] } } },
     };
     create_list_on_server(list);
-    set_board_lists([...board_lists, { name: list_name }]);
+    Board.set_single_board_info([
+      {
+        ...Board.single_board_info[0],
+        board_lists: [
+          ...Board.single_board_info[0].board_lists,
+          { unique_id: random_number, name: list_name, cards: [] },
+        ],
+      }
+    ]);
+    set_list_name("");
   };
 
   useEffect(() => {
@@ -64,37 +74,44 @@ const Create_List = () => {
     }
   }, [Board]);
 
+  if (
+    Board.multiple_board_info.length === 0 ||
+    Board.single_board_info.length === 0
+  ) {
+    return <div id="menu-overlay">Loading...</div>;
+  }
+
   return (
     <>
-      {board_lists.map((board_list, index) => {
-        return (
-          <List key={index} />
-        )
-      })}
-      <div id="Board_List_Container">
-        <div
-          id="create-list"
-          onClick={create_board_list}
-          style={{ visibility: create_list_visibility }}
-          ref={create_list}
-        >
-          + create list
-        </div>
-        <div
-          id="create-list-overlay"
-          style={{ visibility: list_visibility }}
-          ref={create_list_overlay}
-        >
-          <input
-            className="create-list-input"
-            type="text"
-            placeholder="Enter list title"
-            value={list_name}
-            onChange={(e) => set_list_name(e.target.value)}
-          />
-          <button id="create-list-button" onClick={create_list_component}>
-            Create
-          </button>
+      <div id="board-lists-container">
+        {Board.single_board_info[0].board_lists.map((board, index) => {
+          return <List name={board.name} key={index} index={index}/>;
+        })}
+        <div>
+          <div
+            id="create-list"
+            onClick={create_board_list}
+            style={{ visibility: create_list_visibility }}
+            ref={create_list}
+          >
+            + create list
+          </div>
+          <div
+            id="create-list-overlay"
+            style={{ visibility: list_visibility }}
+            ref={create_list_overlay}
+          >
+            <input
+              className="create-list-input"
+              type="text"
+              placeholder="Enter list title"
+              value={list_name}
+              onChange={(e) => set_list_name(e.target.value)}
+            />
+            <button id="create-list-button" onClick={create_list_component}>
+              Create
+            </button>
+          </div>
         </div>
       </div>
     </>

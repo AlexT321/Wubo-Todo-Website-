@@ -30,7 +30,7 @@ const Create_Board_Button = ({
     setVisibilityState_input("hidden");
     setVisibilityState("visible");
 
-    create_board({ name: board_name, choosen: false, favorite: false, board_list:[], date: new Date()});
+    create_board({ name: board_name, choosen: false, favorite: false, board_lists:[], date: new Date()});
     setBoard_name("");
   };
 

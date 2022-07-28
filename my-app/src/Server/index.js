@@ -32,7 +32,7 @@ app.post("/Health-Website", (req, res) => {
         name: req.body.name,
         choosen: req.body.choosen,
         favorite: req.body.favorite,
-        board_list: req.body.board_list,
+        board_lists: req.body.board_lists,
         date: req.body.date
     }
     info.insert(name).then((nameInfo) => {
@@ -96,12 +96,22 @@ app.post("/Health-Website/update_favorite_state", (req, res) => {
 app.post("/Health-Website/create_board_list", (req, res) => {
     const board_list = {
         id: req.body.id,
-        board_list: req.body.board_list,
+        board_lists: req.body.board_lists,
     }
-    info.update(board_list.id, board_list.board_list).then((information) => {
+    info.update(board_list.id, board_list.board_lists).then((information) => {
         res.json(information);
     });
 });
+
+app.post("/Health-Website/create_card", (req, res) => {
+    const card = {
+        list_id: req.body.list_id,
+        cards: req.body.cards,
+    }
+    info.update(card.list_id, card.cards).then((information) => {
+        res.json(information);
+    });
+})
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
