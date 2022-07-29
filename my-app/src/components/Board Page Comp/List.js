@@ -5,7 +5,6 @@ import Card from "./Card";
 const List = ({ name, index }) => {
   const Board = useContext(Board_Context);
 
-  const [cards, set_cards] = useState([]);
   const [create_card_overlay_display, set_card_overlay_display] =
     useState("none");
   const [create_card_button_display, set_card_button_display] =
@@ -27,6 +26,7 @@ const List = ({ name, index }) => {
           body: JSON.stringify(body),
         }
       );
+      // eslint-disable-next-line no-unused-vars
       const data = result.json();
     } catch (err) {
       console.log(err);

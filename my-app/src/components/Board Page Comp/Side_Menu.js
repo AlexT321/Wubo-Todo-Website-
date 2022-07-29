@@ -30,7 +30,7 @@ const Side_Menu = ({
   }
 
   //Home Button
-  const Home = () => {
+  const go_to_home_page = () => {
     navigate("/");
   }
 
@@ -90,7 +90,7 @@ const Side_Menu = ({
         <div id="menu-board-name">{Board.single_board_info[0].name}</div>
         <button className={"btn btn--primary--solid btn--tiny"} id="close-menu-button" onClick={close_menu}>-</button>
       </div>
-      <div id="home-button" onClick={Home}>Home</div>
+      <div id="home-button" onClick={go_to_home_page}>Home</div>
       <div id="menu-header2">
         <div id="your-boards">Your Boards</div>
         <button className={"btn btn--primary--solid btn--tiny"} id="add-board-button" onClick={add_board} ref={add_board_button_ref}>+</button>
@@ -99,7 +99,7 @@ const Side_Menu = ({
         {Board.multiple_board_info.map((board, index) => (
           <Menu_Boards
             key={index}
-            Board={board._id}
+            board_id={board._id}
             board_name={board.name}
             update_all_choosen_state={update_all_choosen_state}
             update_choosen_state={update_choosen_state}

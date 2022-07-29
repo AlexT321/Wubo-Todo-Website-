@@ -4,6 +4,7 @@ const Menu_Boards = ({board_id, board_name, update_all_choosen_state, update_cho
  
   const navigate = useNavigate();
   const onClick = async () => {
+    console.log(board_id);
     navigate(`/${board_name}`);
     const update_info = {
       id: {_id: board_id},
