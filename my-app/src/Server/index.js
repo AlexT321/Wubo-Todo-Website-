@@ -113,6 +113,26 @@ app.post("/Health-Website/create_card", (req, res) => {
     });
 })
 
+app.post("/Health-Website/remove_card_from_list", (req, res) => {
+    const card = {
+        list_id: req.body.list_id,
+        cards: req.body.cards,
+    }
+    info.update(card.list_id, card.cards).then((information) => {
+        res.json(information);
+    });
+})
+
+app.post("/Health-Website/add_card_to_list", (req, res) => {
+    const card = {
+        list_id: req.body.list_id,
+        cards: req.body.cards,
+    }
+    info.update(card.list_id, card.cards).then((information) => {
+        res.json(information);
+    });
+})
+
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

@@ -2,7 +2,6 @@ import { useState, useRef, useContext, useEffect } from "react";
 import { Board_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
 import List from "./List";
 
-
 const Create_List = () => {
   const Board = useContext(Board_Context);
 
@@ -55,7 +54,11 @@ const Create_List = () => {
     const random_number = Math.floor(Math.random() * 100);
     const list = {
       id: { _id: Board.single_board_info[0]._id },
-      board_lists: { $push: { board_lists: { unique_id: random_number, name: list_name, cards: [] } } },
+      board_lists: {
+        $push: {
+          board_lists: { unique_id: random_number, name: list_name, cards: [] },
+        },
+      },
     };
     create_list_on_server(list);
     Board.set_single_board_info([
@@ -65,7 +68,7 @@ const Create_List = () => {
           ...Board.single_board_info[0].board_lists,
           { unique_id: random_number, name: list_name, cards: [] },
         ],
-      }
+      },
     ]);
     set_list_name("");
   };
@@ -86,7 +89,7 @@ const Create_List = () => {
     <>
       <div id="board-lists-container">
         {Board.single_board_info[0].board_lists.map((board, index) => {
-          return <List name={board.name} key={index} index={index}/>;
+          return <List name={board.name} key={index} index={index} />;
         })}
         <div>
           <div
