@@ -300,7 +300,6 @@
   padding: 1.5rem;
   display: flex;
   flex-direction: row;
-  gap: 1vh;
   overflow: auto;
   position: absolute;
 }
@@ -308,8 +307,11 @@
 #board-lists-container {
   display: flex;
   flex-direction: row;
-  gap: 1vh;
-  position: absolute;
+  position: relative;
+}
+
+#create-list-container {
+  position: relative;
 }
 
 #create-list {
@@ -375,6 +377,7 @@
   justify-content: center;
   gap: 0.6rem;
   padding: 0.6rem;
+  margin-right: 1.5vh;
   background-color: #dedede;
 }
 
@@ -419,6 +422,7 @@
 
 .card-container {
   width: 23vh;
+  min-height: 1px;
   display: flex;
   flex-direction: column;
 }

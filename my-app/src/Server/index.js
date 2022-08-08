@@ -123,7 +123,7 @@ app.post("/Health-Website/remove_card_from_list", (req, res) => {
     });
 })
 
-app.post("/Health-Website/add_card_to_list", (req, res) => {
+app.post("/Health-Website/add_card_to_list_at_position", (req, res) => {
     const card = {
         list_id: req.body.list_id,
         cards: req.body.cards,
@@ -132,6 +132,27 @@ app.post("/Health-Website/add_card_to_list", (req, res) => {
         res.json(information);
     });
 })
+
+app.post("/Health-Website/remove_list_from_board", (req, res) => {
+    const lists = {
+        list_id: req.body.list_id,
+        lists: req.body.lists,
+    }
+    info.update(lists.list_id, lists.lists).then((information) => {
+        res.json(information);
+    });
+})
+
+app.post("/Health-Website/add_list_to_board_at_position", (req, res) => {
+    const lists = {
+        list_id: req.body.list_id,
+        lists: req.body.lists,
+    }
+    info.update(lists.list_id, lists.lists).then((information) => {
+        res.json(information);
+    });
+})
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

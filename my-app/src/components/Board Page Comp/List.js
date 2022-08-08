@@ -1,8 +1,8 @@
-import { useState, useRef, useContext } from "react";
+import { useState, useRef, useContext, forwardRef } from "react";
 import { Board_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { Droppable, Draggable } from "react-beautiful-dnd";
 
-const List = ({ name, index }) => {
+const List = forwardRef(({ id, name, index, draggableProps, handleProps, handleOnDragEnd2 }, ref) => {
   const Board = useContext(Board_Context);
 
   const [create_card_overlay_display, set_card_overlay_display] =
@@ -34,6 +34,7 @@ const List = ({ name, index }) => {
   };
 
   const create_card = () => {
+    const random_number = Math.floor(Math.random() * 100);
     const card_info = {
       list_id: {
         _id: Board.single_board_info[0]._id,
@@ -41,7 +42,12 @@ const List = ({ name, index }) => {
           Board.single_board_info[0].board_lists[index].unique_id,
       },
       cards: {
-        $push: { "board_lists.$.cards": { id: card_name + "-" + index, name: card_name } },
+        $push: {
+          "board_lists.$.cards": {
+            id: "C-" + random_number,
+            name: card_name,
+          },
+        },
       },
     };
     create_card_server_side(card_info);
@@ -55,7 +61,7 @@ const List = ({ name, index }) => {
             cards: [
               ...Board.single_board_info[0].board_lists[index].cards,
               {
-                id: card_name,
+                id: "C-" + random_number,
                 name: card_name,
               },
             ],
@@ -86,31 +92,6 @@ const List = ({ name, index }) => {
   };
   document.addEventListener("click", handleClickOutside);
 
-  function handleOnDragEnd(result) {
-    if (!result.destination) return;
-
-    const items = Array.from(Board.single_board_info[0].board_lists[index].cards);
-    console.log(items)
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    console.log(reorderedItem)
-    items.splice(result.destination.index, 0, reorderedItem);
-    console.log(items);
-
-    Board.set_single_board_info([
-      {
-        ...Board.single_board_info[0],
-        board_lists: [
-          ...Board.single_board_info[0].board_lists.slice(0, index),
-          {
-            ...Board.single_board_info[0].board_lists[index],
-            cards: items,
-          },
-          ...Board.single_board_info[0].board_lists.slice(index + 1),
-        ],
-      },
-    ]);
-  }
-
   if (
     Board.multiple_board_info.length === 0 ||
     Board.single_board_info.length === 0
@@ -119,42 +100,43 @@ const List = ({ name, index }) => {
   }
 
   return (
-    <div>
+    <div ref={ref} {...draggableProps}>
       <div className="board">
-        <div id="board-header-container">
+        <div id="board-header-container" {...handleProps}>
           <div id="board-name">{name}</div>
           <button id="board-functionalities">...</button>
         </div>
-        <DragDropContext onDragEnd={handleOnDragEnd}>
-          <Droppable droppableId="card-container">
+        
+          <Droppable droppableId={id} type="droppableSubItem">
             {(provided) => (
               <div
                 className="card-container"
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
-                {Board.single_board_info[0].board_lists[index].cards.map(({ id, name }, index) => {
-                  return (
-                    <Draggable key={id} draggableId={id} index={index}>
-                      {(provided) => (
-                        <div
-                          id="card"
-                          
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                        >
-                          {name}
-                        </div>
-                      )}
-                    </Draggable>
-                  );
-                })}
+                {Board.single_board_info[0].board_lists[index].cards.map(
+                  ({ id, name }, index) => {
+                    return (
+                      <Draggable key={id} draggableId={id} index={index}>
+                        {(provided) => (
+                          <div
+                            id="card"
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                          >
+                            {name}
+                          </div>
+                        )}
+                      </Draggable>
+                    );
+                  }
+                )}
                 {provided.placeholder}
               </div>
             )}
           </Droppable>
-        </DragDropContext>
+       
         <div
           id="create-card-overlay"
           style={{ display: create_card_overlay_display }}
@@ -182,6 +164,6 @@ const List = ({ name, index }) => {
       </div>
     </div>
   );
-};
+});
 
 export default List;
