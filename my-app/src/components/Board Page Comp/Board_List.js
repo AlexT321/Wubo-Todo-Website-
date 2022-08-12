@@ -153,13 +153,13 @@ const Create_List = () => {
     set_list_name("");
   };
 
-  const reorder = (list, startIndex, endIndex) => {
-    const result = Array.from(list);
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
+  // const reorder = (list, startIndex, endIndex) => {
+    // const result = Array.from(list);
+    // const [removed] = result.splice(startIndex, 1);
+    // result.splice(endIndex, 0, removed);
 
-    return result;
-  };
+    // return result;
+  // };
 
   function handleOnDragEnd(result) {
     if (!result.destination) return;
@@ -213,13 +213,10 @@ const Create_List = () => {
       );
 
       const sourceParentId = result.source.droppableId;
-
       const destinationParentId = result.destination.droppableId;
-
       const sourceSubItems = itemSubItemMap[sourceParentId];
-
       const destinationSubItems = itemSubItemMap[destinationParentId];
-
+      
       let newItems = [...Board.single_board_info[0].board_lists];
 
       if (sourceParentId === destinationParentId) {
@@ -242,7 +239,6 @@ const Create_List = () => {
         );
         const [reorderedItem] = items.splice(result.source.index, 1);
         items.splice(result.destination.index, 0, reorderedItem);
-        console.log(items);
         const add_card_info = {
           list_id: {
             _id: Board.single_board_info[0]._id,

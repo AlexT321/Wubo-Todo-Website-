@@ -57,11 +57,12 @@ const Side_Menu = ({
 
   const added_board = (e) => {
     if (e.key === "Enter") {
-      create_board({ name: e.target.value, choosen: false, favorite: false });
+      create_board({ name: e.target.value, choosen: false, favorite: false, board_lists:[], date: new Date()});
       Board.multiple_board_info.push({
         name: e.target.value,
         choosen: false,
       });
+      load_board_data();
       add_board_ref.current.value = "";
       set_add_board_visibility("hidden");
     }
@@ -99,6 +100,7 @@ const Side_Menu = ({
         {Board.multiple_board_info.map((board, index) => (
           <Menu_Boards
             key={index}
+            index={index}
             board_id={board._id}
             board_name={board.name}
             update_all_choosen_state={update_all_choosen_state}

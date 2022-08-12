@@ -180,3 +180,20 @@ code {
   cursor: pointer;
 }
 
+#delete-main-board-button {
+  width: 2vh;
+  height: 2vh;
+  font-size: 1vh;
+  font-family: "Roboto", sans-serif;
+  background-color: #686868;
+  color: #F9F9F9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2px;
+  position: absolute;
+  top: 8%;
+  left: 88%;
+  border: none;
+  cursor: pointer;
+}

@@ -1,17 +1,21 @@
-import { useState, useEffect, useRef } from "react";
-import Board from "./Board";
+import { useState, useEffect, useRef, useContext } from "react";
+import Boards from "./Board";
+import { Board_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
 
 const Create_Board_Button = ({
   create_board,
-  Get_Boards,
   update_all_choosen_state,
   update_choosen_state,
   load_board_data,
 }) => {
+  const Board = useContext(Board_Context);
+
   const ref = useRef(null);
+
   const [visibilityState_cb_btn, setVisibilityState] = useState("visible");
   const [visibilityState_cb_input, setVisibilityState_input] =
     useState("hidden");
+
   const onClick = () => {
     setVisibilityState(
       visibilityState_cb_btn === "visible" ? "hidden" : "visible"
@@ -21,20 +25,34 @@ const Create_Board_Button = ({
     );
   };
 
-  const [boards, setBoards] = useState([]);
-
   const [board_name, setBoard_name] = useState("");
 
   const create_boards = () => {
-    setBoards([...boards, { name: board_name }]);
     setVisibilityState_input("hidden");
     setVisibilityState("visible");
 
-    create_board({ name: board_name, choosen: false, favorite: false, board_lists:[], date: new Date()});
+    create_board({
+      name: board_name,
+      choosen: false,
+      favorite: false,
+      board_lists: [],
+      date: new Date(),
+    });
     setBoard_name("");
+    Board.set_multiple_board_info([
+      ...Board.multiple_board_info,
+      {
+        name: board_name,
+        choosen: false,
+        favorite: false,
+        board_lists: [],
+        date: new Date(),
+      },
+    ]);
+    load_board_data();
   };
 
-  boards.sort((a, b) => {
+  Board.multiple_board_info.sort((a, b) => {
     if (a.favorite && !b.favorite) {
       return -1;
     } else if (!a.favorite && b.favorite) {
@@ -44,29 +62,30 @@ const Create_Board_Button = ({
     }
   });
 
-  useEffect(() => {
-    setBoards([...boards]);
-
-    if (boards.length === 0) {
-      Get_Boards(boards, setBoards);
+  const handleClickOutside = (e) => {
+    if (ref.current && !ref.current.contains(e.target)) {
+      setVisibilityState("visible");
+      setVisibilityState_input("hidden");
     }
+  };
+  document.addEventListener("click", handleClickOutside);
 
-    const handleClickOutside = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) {
-        setVisibilityState("visible");
-        setVisibilityState_input("hidden");
-      }
-    };
-
-    document.addEventListener("click", handleClickOutside);
+  useEffect(() => {
+    load_board_data();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  if (
+    Board.multiple_board_info.length === 0
+  ) {
+    return <div id="menu-overlay">Loading...</div>;
+  }
+
   return (
     <>
-      {boards.map((board, index) => {
+      {Board.multiple_board_info.map((board, index) => {
         return (
-          <Board
+          <Boards
             name={board.name}
             key={index}
             unique_id={board._id}

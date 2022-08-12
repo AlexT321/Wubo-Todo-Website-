@@ -1,112 +1,136 @@
+/* eslint-disable react/jsx-pascal-case */
 import { useState, useRef, useContext, forwardRef } from "react";
 import { Board_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
 import { Droppable, Draggable } from "react-beautiful-dnd";
+import List_Menu from "./List_Menu";
+import Card from "./Card";
 
-const List = forwardRef(({ id, name, index, draggableProps, handleProps, handleOnDragEnd2 }, ref) => {
-  const Board = useContext(Board_Context);
+const List = forwardRef(
+  ({ id, name, index, draggableProps, handleProps }, ref) => {
+    const Board = useContext(Board_Context);
 
-  const [create_card_overlay_display, set_card_overlay_display] =
-    useState("none");
-  const [create_card_button_display, set_card_button_display] =
-    useState("flex");
-  const [card_name, set_card_name] = useState("");
+    const [list_menu_vis, set_list_menu_vis] = useState("none");
+    const [create_card_overlay_display, set_card_overlay_display] =
+      useState("none");
+    const [create_card_button_display, set_card_button_display] =
+      useState("flex");
+    const [card_name, set_card_name] = useState("");
 
-  const create_card_ref = useRef(null);
-  const add_card_ref = useRef(null);
+    const list_menu_ref = useRef(null);
+    const functionalities_ref = useRef(null);
+    const create_card_ref = useRef(null);
+    const add_card_ref = useRef(null);
 
-  const create_card_server_side = async (body) => {
-    try {
-      const result = await fetch(
-        "http://localhost:5000/Health-Website/create_card",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(body),
-        }
-      );
-      // eslint-disable-next-line no-unused-vars
-      const data = result.json();
-    } catch (err) {
-      console.log(err);
+    const create_card_server_side = async (body) => {
+      try {
+        const result = await fetch(
+          "http://localhost:5000/Health-Website/create_card",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(body),
+          }
+        );
+        // eslint-disable-next-line no-unused-vars
+        const data = result.json();
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    const show_list_menu = () => {
+      if (list_menu_vis === "none") {
+        set_list_menu_vis("flex");
+      } else {
+        set_list_menu_vis("none");
+      }
     }
-  };
 
-  const create_card = () => {
-    const random_number = Math.floor(Math.random() * 100);
-    const card_info = {
-      list_id: {
-        _id: Board.single_board_info[0]._id,
-        "board_lists.unique_id":
-          Board.single_board_info[0].board_lists[index].unique_id,
-      },
-      cards: {
-        $push: {
-          "board_lists.$.cards": {
-            id: "C-" + random_number,
-            name: card_name,
+    const create_card = () => {
+      const random_number = Math.floor(Math.random() * 100);
+      const card_info = {
+        list_id: {
+          _id: Board.single_board_info[0]._id,
+          "board_lists.unique_id":
+            Board.single_board_info[0].board_lists[index].unique_id,
+        },
+        cards: {
+          $push: {
+            "board_lists.$.cards": {
+              id: "C-" + random_number,
+              name: card_name,
+            },
           },
         },
-      },
-    };
-    create_card_server_side(card_info);
-    Board.set_single_board_info([
-      {
-        ...Board.single_board_info[0],
-        board_lists: [
-          ...Board.single_board_info[0].board_lists.slice(0, index),
-          {
-            ...Board.single_board_info[0].board_lists[index],
-            cards: [
-              ...Board.single_board_info[0].board_lists[index].cards,
-              {
-                id: "C-" + random_number,
-                name: card_name,
-              },
-            ],
-          },
-          ...Board.single_board_info[0].board_lists.slice(index + 1),
-        ],
-      },
-    ]);
-    set_card_name("");
-    set_card_overlay_display("none");
-    set_card_button_display("flex");
-  };
-
-  const add_card = () => {
-    set_card_overlay_display("flex");
-    set_card_button_display("none");
-  };
-
-  const handleClickOutside = (e) => {
-    if (
-      create_card_ref.current &&
-      !create_card_ref.current.contains(e.target) &&
-      !add_card_ref.current.contains(e.target)
-    ) {
+      };
+      create_card_server_side(card_info);
+      Board.set_single_board_info([
+        {
+          ...Board.single_board_info[0],
+          board_lists: [
+            ...Board.single_board_info[0].board_lists.slice(0, index),
+            {
+              ...Board.single_board_info[0].board_lists[index],
+              cards: [
+                ...Board.single_board_info[0].board_lists[index].cards,
+                {
+                  id: "C-" + random_number,
+                  name: card_name,
+                },
+              ],
+            },
+            ...Board.single_board_info[0].board_lists.slice(index + 1),
+          ],
+        },
+      ]);
+      set_card_name("");
       set_card_overlay_display("none");
       set_card_button_display("flex");
+    };
+
+    const add_card = () => {
+      set_card_overlay_display("flex");
+      set_card_button_display("none");
+    };
+
+    const handleClickOutside = (e) => {
+      if (
+        create_card_ref.current &&
+        !create_card_ref.current.contains(e.target) &&
+        !add_card_ref.current.contains(e.target) 
+      ) {
+        set_card_overlay_display("none");
+        set_card_button_display("flex");
+      }
+      if (
+        list_menu_ref.current &&
+        !list_menu_ref.current.contains(e.target) &&
+        !functionalities_ref.current.contains(e.target)
+      ) {
+        set_list_menu_vis("none");
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+
+    if (
+      Board.multiple_board_info.length === 0 ||
+      Board.single_board_info.length === 0
+    ) {
+      return <div id="menu-overlay">Loading...</div>;
     }
-  };
-  document.addEventListener("click", handleClickOutside);
 
-  if (
-    Board.multiple_board_info.length === 0 ||
-    Board.single_board_info.length === 0
-  ) {
-    return <div id="menu-overlay">Loading...</div>;
-  }
-
-  return (
-    <div ref={ref} {...draggableProps}>
-      <div className="board">
-        <div id="board-header-container" {...handleProps}>
-          <div id="board-name">{name}</div>
-          <button id="board-functionalities">...</button>
-        </div>
-        
+    return (
+      <div ref={ref} {...draggableProps}>
+        <ul className="list">
+          <div id="list-header-container" {...handleProps}>
+            <h2 id="list-name">{name}</h2>
+            <button id="list-functionalities" onClick={show_list_menu} ref={functionalities_ref}>...</button>
+            <ul id="list-menu-container" style={{display: list_menu_vis}} ref={list_menu_ref}>
+              <List_Menu id={id} list_index={index}/>
+            </ul>
+          </div>
           <Droppable droppableId={id} type="droppableSubItem">
             {(provided) => (
               <div
@@ -115,18 +139,19 @@ const List = forwardRef(({ id, name, index, draggableProps, handleProps, handleO
                 ref={provided.innerRef}
               >
                 {Board.single_board_info[0].board_lists[index].cards.map(
-                  ({ id, name }, index) => {
+                  ({ id, name }, card_index) => {
                     return (
-                      <Draggable key={id} draggableId={id} index={index}>
+                      <Draggable key={id} draggableId={id} index={card_index}>
                         {(provided) => (
-                          <div
-                            id="card"
+                          <Card
+                            id={id}
+                            board_index={index}
+                            card_index={card_index}
+                            name={name}
+                            draggableProps={{ ...provided.draggableProps }}
+                            dragHandleProps={{ ...provided.dragHandleProps }}
                             ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                          >
-                            {name}
-                          </div>
+                          />
                         )}
                       </Draggable>
                     );
@@ -136,34 +161,35 @@ const List = forwardRef(({ id, name, index, draggableProps, handleProps, handleO
               </div>
             )}
           </Droppable>
-       
-        <div
-          id="create-card-overlay"
-          style={{ display: create_card_overlay_display }}
-          ref={create_card_ref}
-        >
-          <input
-            className="create-card-input"
-            type="text"
-            placeholder="Enter card name"
-            value={card_name}
-            onChange={(e) => set_card_name(e.target.value)}
-          />
-          <button id="create-card-button" onClick={create_card}>
-            Create
-          </button>
-        </div>
-        <div
-          id="add-card"
-          onClick={add_card}
-          style={{ display: create_card_button_display }}
-          ref={add_card_ref}
-        >
-          + Add card
-        </div>
+
+          <div
+            id="create-card-overlay"
+            style={{ display: create_card_overlay_display }}
+            ref={create_card_ref}
+          >
+            <input
+              className="create-card-input"
+              type="text"
+              placeholder="Enter card name"
+              value={card_name}
+              onChange={(e) => set_card_name(e.target.value)}
+            />
+            <button id="create-card-button" onClick={create_card}>
+              Create
+            </button>
+          </div>
+          <div
+            id="add-card"
+            onClick={add_card}
+            style={{ display: create_card_button_display }}
+            ref={add_card_ref}
+          >
+            + Add card
+          </div>
+        </ul>
       </div>
-    </div>
-  );
-});
+    );
+  }
+);
 
 export default List;
