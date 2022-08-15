@@ -12,6 +12,9 @@ import ProfileOverlay from "./components/Board Page Comp/profile_overlay";
 import Board_Header_2 from "./components/Board Page Comp/Board_Header_2";
 import Board_List from "./components/Board Page Comp/Board_List";
 
+import Login from "./components/Login Page Comp/Login";
+import Sign_Up from "./components/Login Page Comp/Sign_Up";
+
 export const Board_Context = createContext();
 
 function App() {
@@ -103,6 +106,26 @@ function App() {
       >
         <Routes>
           <Route
+            path="/login"
+            element={
+              <div className="App">
+                <div id="login-container">
+                  <Login />
+                </div>
+              </div>
+            }
+          ></Route>
+          <Route
+            path="/sign-Up"
+            element={
+              <div className="App">
+                <div id="login-container">
+                  <Sign_Up />
+                </div>
+              </div>
+            }
+          ></Route>
+          <Route
             path="/"
             element={
               <div className="App">
@@ -124,7 +147,7 @@ function App() {
             }
           ></Route>
           <Route
-            path="/:boardName"
+            path="/user/:boardName"
             element={
               <div className="App">
                 <div id="container-2">

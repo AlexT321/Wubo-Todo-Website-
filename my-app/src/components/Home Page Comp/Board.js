@@ -34,7 +34,7 @@ const Board = ({
 
 
   const onClick = async () => {
-    navigate(`/${name}`);
+    navigate(`/user/${name}`);
     const update_info = {
       id: { _id: unique_id },
       choosen: { $set: { choosen: true } },
