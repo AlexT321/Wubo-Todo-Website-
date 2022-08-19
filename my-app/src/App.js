@@ -3,6 +3,9 @@ import "./assets/App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useState, createContext } from "react";
 
+import { AuthProvider } from "./context/AuthContext";
+import PrivateRoute from "./utils/PrivateRoute";
+
 import Header from "./components/Home Page Comp/Header";
 import Create_Buttons from "./components/Home Page Comp/Create_Boards";
 
@@ -14,6 +17,7 @@ import Board_List from "./components/Board Page Comp/Board_List";
 
 import Login from "./components/Login Page Comp/Login";
 import Sign_Up from "./components/Login Page Comp/Sign_Up";
+import ForgotPassword from "./components/Login Page Comp/ForgotPassword";
 
 export const Board_Context = createContext();
 
@@ -96,91 +100,106 @@ function App() {
 
   return (
     <Router>
-      <Board_Context.Provider
-        value={{
-          single_board_info: single_board_data,
-          multiple_board_info: multiple_board_data,
-          set_single_board_info: set_single_board_data,
-          set_multiple_board_info: set_multiple_board_data,
-        }}
-      >
-        <Routes>
-          <Route
-            path="/login"
-            element={
-              <div className="App">
-                <div id="login-container">
-                  <Login />
+      <AuthProvider>
+        <Board_Context.Provider
+          value={{
+            single_board_info: single_board_data,
+            multiple_board_info: multiple_board_data,
+            set_single_board_info: set_single_board_data,
+            set_multiple_board_info: set_multiple_board_data,
+          }}
+        >
+          <Routes>
+            <Route
+              path="/login"
+              element={
+                <div className="App">
+                  <div id="login-container">
+                    <Login />
+                  </div>
                 </div>
-              </div>
-            }
-          ></Route>
-          <Route
-            path="/sign-Up"
-            element={
-              <div className="App">
-                <div id="login-container">
-                  <Sign_Up />
+              }
+            ></Route>
+            <Route
+              path="/sign-Up"
+              element={
+                <div className="App">
+                  <div id="login-container">
+                    <Sign_Up />
+                  </div>
                 </div>
-              </div>
-            }
-          ></Route>
-          <Route
-            path="/"
-            element={
-              <div className="App">
-                <div id="container">
-                  <Header />
-                  <div id="content-body">
-                    <div id="Your-Boards">Your Boards</div>
-                    <div id="Boards-container">
-                      <Create_Buttons
+              }
+            ></Route>
+            <Route
+              path="/forgot-password"
+              element={
+                <div className="App">
+                  <div id="login-container">
+                    <ForgotPassword />
+                  </div>
+                </div>
+              }
+            ></Route>
+            <Route element={<PrivateRoute />}>
+              <Route
+                exact
+                path="/"
+                element={
+                  <div className="App">
+                    <div id="container">
+                      <Header />
+                      <div id="content-body">
+                        <div id="Your-Boards">Your Boards</div>
+                        <div id="Boards-container">
+                          <Create_Buttons
+                            create_board={create_board}
+                            update_all_choosen_state={update_all_choosen_state}
+                            update_choosen_state={update_choosen_state}
+                            load_board_data={load_board_data}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                }
+              ></Route>
+            </Route>
+            <Route
+              path="/user/:boardName"
+              element={
+                <div className="App">
+                  <div id="container-2">
+                    <Board_Header load_board_data={load_board_data} />
+                    <div id="header2-content-body-container">
+                      <Side_Menu
+                        Side_Menu_Visibility={Side_Menu_visibility}
+                        Set_Side_Menu_Visibility={set_Side_Menu_Visibility}
                         create_board={create_board}
+                        set_move_content_to_right={set_move_content_to_right}
                         update_all_choosen_state={update_all_choosen_state}
                         update_choosen_state={update_choosen_state}
                         load_board_data={load_board_data}
                       />
+                      <ProfileOverlay />
+                      <Board_Header_2
+                        Set_Side_Menu_Visibility={set_Side_Menu_Visibility}
+                        move_content_to_right={move_content_to_right}
+                        set_move_content_to_right={set_move_content_to_right}
+                      />
+                      <div
+                        id="content-body2"
+                        style={{ left: move_content_to_right }}
+                      >
+                        <Board_List />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            }
-          ></Route>
-          <Route
-            path="/user/:boardName"
-            element={
-              <div className="App">
-                <div id="container-2">
-                  <Board_Header load_board_data={load_board_data} />
-                  <div id="header2-content-body-container">
-                    <Side_Menu
-                      Side_Menu_Visibility={Side_Menu_visibility}
-                      Set_Side_Menu_Visibility={set_Side_Menu_Visibility}
-                      create_board={create_board}
-                      set_move_content_to_right={set_move_content_to_right}
-                      update_all_choosen_state={update_all_choosen_state}
-                      update_choosen_state={update_choosen_state}
-                      load_board_data={load_board_data}
-                    />
-                    <ProfileOverlay />
-                    <Board_Header_2
-                      Set_Side_Menu_Visibility={set_Side_Menu_Visibility}
-                      move_content_to_right={move_content_to_right}
-                      set_move_content_to_right={set_move_content_to_right}
-                    />
-                    <div
-                      id="content-body2"
-                      style={{ left: move_content_to_right }}
-                    >
-                      <Board_List />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            }
-          ></Route>
-        </Routes>
-      </Board_Context.Provider>
+              }
+            ></Route>
+          </Routes>
+        </Board_Context.Provider>
+      </AuthProvider>
     </Router>
   );
 }
