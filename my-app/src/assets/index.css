@@ -11,6 +11,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
 }
 
 code {
@@ -21,7 +22,7 @@ code {
 #header {
   width: 100%;
   height: 10vh;
-  background-color: #323C5B;
+  background-color: #2F499B;
   display: flex;
   justify-content: space-between;
 }
@@ -38,7 +39,7 @@ code {
 #logo {
   width: 5vh;
   height: 50%;
-  background-color: #2A457A;
+  background-color: #4971BE;
 }
 
 #name {
@@ -59,7 +60,33 @@ code {
   width: 8vh;
   height: 8vh;
   border-radius: 50%;
-  background-color: #3E4AB7;
+  background-color: #5462E1;
+}
+
+#home-profile-overlay {
+  position: absolute;
+  width: 22vh;
+  height: 36vh;
+  border-radius: 20px;
+  right: 2%;
+  top: 10%;
+  background: #ffffff;
+  display: flex;
+  padding-top: 3vh;
+  align-items: center;
+  flex-direction: column;
+  gap: 4vh;
+  z-index: 1;
+  visibility: visible;
+}
+
+#log-out {
+  font-size: 1.8vh;
+  cursor: pointer;
+}
+
+#log-out:hover {
+  text-decoration: underline;
 }
 
 #content-body {
@@ -71,6 +98,7 @@ code {
   align-items: center;
   justify-content: center;
   gap: 2em;
+  overflow: auto;
 }
 
 #Your-Boards {
@@ -87,22 +115,173 @@ code {
 }
 
 #Boards-container {
-  width: 70vw;
-  height: 60vh;
-  background-color: #2B3451;
+  height: 100%;
+  width: 125vh;
+  /* background-color: #2B3451; */
   border-radius: 20px;
   padding: 2em;
   display: flex;
-  flex-wrap: wrap;
-  
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
   gap: 4em;
-  overflow: auto;
+}
+
+@media only screen and (max-width: 1050px) {
+  #Boards-container {
+    width: 100%;
+    gap: 1em;
+  }
+}
+
+@media only screen and (max-width: 1050px) {
+  #Boards-container {
+    flex-direction: column;
+  }
+}
+
+@media only screen and (min-width: 723px) {
+  #Boards-container {
+    width: 90%;
+  }
+}
+
+@media only screen and (max-width: 790px) {
+  #Boards-container {
+    width: 90%;
+    height: 80%;
+    margin-top: 10vh;
+  }
+}
+
+#side-content-container {
+  height: 70vh;
+  width: 30vh;
+  background-color: #293253;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5em;
+  border-radius: 28px;
+  padding-top: 2rem;
+}
+
+#boards-button {
+  width: 75%;
+  height: 4vh;
+  background-color: #46599e;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: #dfdfdf;
+  font-size: 1.8vh;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  padding-left: 2rem;
+}
+
+#favortie-button {
+  width: 75%;
+  height: 4vh;
+  background-color: #46599e;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: #dfdfdf;
+  font-size: 1.8vh;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  padding-left: 2rem;
+ 
+}
+
+#log-out-button {
+  width: 75%;
+  height: 4vh;
+  background-color: #46599e;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: #dfdfdf;
+  font-size: 1.8vh;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  padding-left: 2rem;
+}
+
+@media only screen and (max-width: 1050px) {
+  #side-content-container {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 2em;
+    border-radius: 10px;
+  }
+
+  #boards-button {
+    width: 15vh;
+  }
+  #favortie-button {
+    width: 15vh;
+  }
+  #log-out-button {
+    width: 15vh;
+  }
+}
+
+#main-content-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 70vh;
+  padding: 2rem;
+  background-color: #293253;
+  border-radius: 25px;
+  position: relative;
+  overflow: auto;
+}
+
+@media only screen and (max-width: 816px) {
+  #main-content-container {
+    height: 70vh;
+  }
+}
+
+#boards-title {
+  width: 100%;
+  font-size: 2vh;
+  text-align: center;
+  color: #dfdfdf;
+  text-decoration: underline;
+  display: flex;
+  justify-content: flex-start;
+  padding-bottom: 2rem;
+}
+
+#boards-container-2 {
+  width: 65vh;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  position: relative;
+  overflow: auto;
+}
+
+@media only screen and (max-width: 816px) {
+  #boards-container-2 {
+    width: 90%;
+    height: 100%;
+  }
 }
 
 #create-board-container {
-  width: 25vh;
-  height: 25%;
+  width: 21vh;
+  height: 10vh;
   border-radius: 20px;
   background-color: #242B43;
   position: relative;
@@ -111,8 +290,8 @@ code {
 }
 
 #create-board-overlay {
-  width: 25vh;
-  height: 100%;
+  width: 21vh;
+  height: 10vh;
   border-radius: 20px;
   background-color: #929292;
   display: flex;
@@ -125,7 +304,7 @@ code {
 .create-board {
   font-size: 1.2vh;
   border-radius: 20px;
-  width: 20vh;
+  width: 18vh;
   height: 25%;
   border: none;
   background-color: #D8D8D8;
@@ -143,18 +322,18 @@ code {
   justify-content: center;
   align-items: center;
   background-color: #536398;
-  color: #F9F9F9;
+  color: #dfdfdf;
   border: none;
   cursor: pointer;
 }
 
 #create-board {
-  width: 25vh;
-  height: 100%;
-  font-size: 3vh;
+  width: 21vh;
+  height: 10vh;
+  font-size: 2.5vh;
   font-family: "Roboto", sans-serif;
-  background-color: #929292;
-  color: #E8E8E8;
+  background-color: #46599e;
+  color: #dfdfdf;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -165,12 +344,12 @@ code {
 }
 
 .board-button {
-  width: 25vh;
-  height: 100%;
-  font-size: 3vh;
+  width: 21vh;
+  height: 10vh;
+  font-size: 2.5vh;
   font-family: "Roboto", sans-serif;
-  background-color: #929292;
-  color: #E8E8E8;
+  background-color: #46599e;
+  color: #dfdfdf;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -185,8 +364,8 @@ code {
   height: 2vh;
   font-size: 1vh;
   font-family: "Roboto", sans-serif;
-  background-color: #686868;
-  color: #F9F9F9;
+  background-color: #46599e;
+  color: #dfdfdf;
   display: flex;
   justify-content: center;
   align-items: center;

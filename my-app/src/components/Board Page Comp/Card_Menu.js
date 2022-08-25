@@ -1,7 +1,7 @@
-import { Board_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
+import { User_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
 import { useContext } from "react";
 const Card_Menu = ({ id, board_index, card_index }) => {
-  const Board = useContext(Board_Context);
+  const User = useContext(User_Context);
   const remove_card_from_list = async (body) => {
     try {
       const result = await fetch(
@@ -24,27 +24,35 @@ const Card_Menu = ({ id, board_index, card_index }) => {
   const delete_card = () => {
     const remove_card_info = {
       list_id: {
-        _id: Board.single_board_info[0]._id,
-        "board_lists.unique_id":
-          Board.single_board_info[0].board_lists[board_index].unique_id,
+        user_id: User.user_id,
       },
       cards: {
-        $pull: { "board_lists.$.cards": { id: id } },
+        $pull: { "boards.$[i].board_lists.$[j].cards": { id: id } },
       },
+      filter: {
+        arrayFilters: [
+          {
+            "i.board_id": User.single_board_info[0].board_id,
+          },
+          {
+            "j.unique_id": User.single_board_info[0].board_lists[board_index].unique_id,
+          }
+        ]
+      }
     };
 
     remove_card_from_list(remove_card_info);
-    Board.set_single_board_info([
+    User.set_single_board_info([
       {
-        ...Board.single_board_info[0],
+        ...User.single_board_info[0],
         board_lists: [
-          ...Board.single_board_info[0].board_lists.slice(0, board_index),
+          ...User.single_board_info[0].board_lists.slice(0, board_index),
           {
-            ...Board.single_board_info[0].board_lists[board_index],
-            cards: Board.single_board_info[0].board_lists[board_index].cards
+            ...User.single_board_info[0].board_lists[board_index],
+            cards: User.single_board_info[0].board_lists[board_index].cards
             .filter((_, index) => index !== card_index),
           },
-          ...Board.single_board_info[0].board_lists.slice(board_index + 1),
+          ...User.single_board_info[0].board_lists.slice(board_index + 1),
         ],
       },
     ]);

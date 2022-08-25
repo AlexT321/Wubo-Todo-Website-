@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
-import { Board_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
+import { User_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
 
 const Menu_Boards = ({
   index,
@@ -10,7 +10,7 @@ const Menu_Boards = ({
   update_choosen_state,
   load_board_data,
 }) => {
-  const Board = useContext(Board_Context);
+  const User = useContext(User_Context);
 
 
   const [hover_state, set_hover_state] = useState(false);
@@ -38,14 +38,14 @@ const Menu_Boards = ({
   };
 
   const onClick = async () => {
-    navigate(`/${board_name}`);
+    navigate(`/user/${board_name}`);
     const update_info = {
-      id: { _id: board_id },
-      choosen: { $set: { choosen: true } },
+      id: { user_id: User.user_id, "boards.board_id": board_id },
+      choosen: { $set: { "boards.$.choosen": true } },
     };
     const update_all_info = {
-      id: {},
-      choosen: { $set: { choosen: false } },
+      id: {user_id: User.user_id},
+      choosen: { $set: { "boards.$[].choosen": false } },
     };
     await update_all_choosen_state(update_all_info);
     await update_choosen_state(update_info);
@@ -59,13 +59,14 @@ const Menu_Boards = ({
 
   const delete_board = () => {
     const boards_info = {
-      board_id: { _id: board_id },
+      id: { user_id: User.user_id},
+      board: { $pull: {boards: {board_id: board_id}} },
     }
     if (board_id !== undefined) {
       remove_board(boards_info);
     }
 
-    Board.set_multiple_board_info(Board.multiple_board_info.filter((board,index) => board._id !== board_id));
+    User.set_multiple_board_info(User.multiple_board_info.filter((board,index) => board.board_id !== board_id));
   }
   return (
     <div

@@ -1,8 +1,8 @@
-import { Board_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
+import { User_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
 import { useContext} from "react";
 
 const List_Menu = ({id, list_index}) => {
-    const Board = useContext(Board_Context);
+    const User = useContext(User_Context);
     
     const remove_list_from_board = async (body) => {
       try {
@@ -27,18 +27,18 @@ const List_Menu = ({id, list_index}) => {
     const delete_list = () => {
       const list_info = {
         list_id: {
-          _id: Board.single_board_info[0]._id,
-          "board_lists.unique_id":
-            Board.single_board_info[0].board_lists[list_index].unique_id,
+          user_id: User.user_id,
+          "boards.board_id":
+            User.single_board_info[0].board_id,
         },
         lists: {
-          $pull: { board_lists: { unique_id: id } },
+          $pull: { "boards.$.board_lists": { unique_id: id } },
         },
       };
       remove_list_from_board(list_info);
-        Board.set_single_board_info([{
-            ...Board.single_board_info[0],
-            board_lists: Board.single_board_info[0].board_lists.filter((_, index) => index !== list_index)
+        User.set_single_board_info([{
+            ...User.single_board_info[0],
+            board_lists: User.single_board_info[0].board_lists.filter((_, index) => index !== list_index)
         }]);
     }
   return (

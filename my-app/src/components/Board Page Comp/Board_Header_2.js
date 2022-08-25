@@ -1,13 +1,13 @@
 /* eslint-disable react/jsx-pascal-case */
 import { useContext, useRef, useEffect, useState } from "react";
-import { Board_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
+import { User_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
 
 const Board_Header_2 = ({
   Set_Side_Menu_Visibility,
   move_content_to_right,
   set_move_content_to_right,
 }) => {
-  const Board = useContext(Board_Context);
+  const User = useContext(User_Context);
 
   //Name of board
   const ref = useRef(null);
@@ -15,6 +15,7 @@ const Board_Header_2 = ({
 
   //favorite button
   const [is_active, set_is_active] = useState("rgba(255, 255, 255, 1)");
+  const [run_once, set_run_once] = useState(true);
 
   //side menu button
   const open_side_menu = () => {
@@ -44,23 +45,23 @@ const Board_Header_2 = ({
   const change_board_name = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      if (board_name.current.innerText !== Board.single_board_info[0].name) {
+      if (board_name.current.innerText !== User.single_board_info[0].name) {
         const update_name_of_board = {
-          id: { _id: Board.single_board_info[0]._id },
-          name: { $set: { name: board_name.current.innerText } },
+          id: { user_id: User.user_id, "boards.board_id": User.single_board_info[0].board_id},
+          name: { $set: { "boards.$.name": board_name.current.innerText } },
         };
         update_name(update_name_of_board);
-        for (let i = 0; i < Board.multiple_board_info.length; i++) {
+        for (let i = 0; i < User.multiple_board_info.length; i++) {
           if (
-            Board.single_board_info[0]._id ===
-            Board.multiple_board_info[i]._id
+            User.single_board_info[0].board_id ===
+            User.multiple_board_info[i].board_id
           ) {
-            Board.multiple_board_info[i].name = board_name.current.innerText;
+            User.multiple_board_info[i].name = board_name.current.innerText;
           }
         }
-        Board.set_single_board_info([
+        User.set_single_board_info([
           {
-            ...Board.single_board_info[0],
+            ...User.single_board_info[0],
             name: board_name.current.innerText,
           },
         ]);
@@ -89,15 +90,16 @@ const Board_Header_2 = ({
     }
   };
   const onClick = () => {
+    set_run_once(false)
     if (is_active === "rgba(255, 255, 255, 1)") {
       update_favorite({
-        id: { _id: Board.single_board_info[0]._id },
-        favorite: { $set: { favorite: true } },
+        id: { user_id: User.user_id, "boards.board_id": User.single_board_info[0].board_id},
+        favorite: { $set: { "boards.$.favorite": true } },
       });
     } else {
       update_favorite({
-        id: { _id: Board.single_board_info[0]._id },
-        favorite: { $set: { favorite: false } },
+        id: { user_id: User.user_id, "boards.board_id": User.single_board_info[0].board_id},
+        favorite: { $set: { "boards.$.favorite": false } },
       });
     }
     set_is_active(
@@ -105,25 +107,25 @@ const Board_Header_2 = ({
         ? "rgba(255, 255, 255, 1)"
         : "rgba(255, 196, 0, 1)"
     );
-    for (let i = 0; i < Board.multiple_board_info.length; i++) {
+    for (let i = 0; i < User.multiple_board_info.length; i++) {
       if (
-        Board.single_board_info[0]._id ===
-        Board.multiple_board_info[i]._id
+        User.single_board_info[0].board_id ===
+        User.multiple_board_info[i].board_id
       ) {
-        Board.multiple_board_info[i].favorite = Board.multiple_board_info[
+        User.multiple_board_info[i].favorite = User.multiple_board_info[
           i
         ].favorite
           ? false
           : true;
       }
     }
-    Board.set_single_board_info([
+    User.set_single_board_info([
       {
-        ...Board.single_board_info[0],
-        favorite: !Board.single_board_info[0].favorite,
+        ...User.single_board_info[0],
+        favorite: !User.single_board_info[0].favorite,
       },
     ]);
-    Board.multiple_board_info.sort((a, b) => {
+    User.multiple_board_info.sort((a, b) => {
       if (a.favorite && !b.favorite) {
         return -1;
       } else if (!a.favorite && b.favorite) {
@@ -134,34 +136,35 @@ const Board_Header_2 = ({
     });
   };
 
-  useEffect(() => {
-    //name of board
-    const handleClickOutside = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) {
-        if (Board.single_board_info.length > 0) {
-          if (
-            board_name.current.innerText !== Board.single_board_info[0].name
-          ) {
-            board_name.current.innerText = Board.single_board_info[0].name;
-          }
+ //name of board
+  const handleClickOutside = (e) => {
+    if (ref.current && !ref.current.contains(e.target)) {
+      if (User.single_board_info.length > 0) {
+        if (
+          board_name.current.innerText !== User.single_board_info[0].name
+        ) {
+          board_name.current.innerText = User.single_board_info[0].name;
         }
       }
-    };
-    document.addEventListener("click", handleClickOutside);
+    }
+  };
+  document.addEventListener("click", handleClickOutside);
 
+  useEffect(() => {
     //favorite button
-    if (Board.single_board_info.length > 0) {
-      if (Board.single_board_info[0].favorite) {
+    console.log(User.single_board_info)
+    if (User.single_board_info.length > 0 && run_once === true) {
+      if (User.single_board_info[0].favorite) {
         set_is_active("rgba(255, 196, 0, 1)");
       } else {
         set_is_active("rgba(255, 255, 255, 1)");
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [Board]);
+  }, [User.single_board_info]);
   if (
-    Board.multiple_board_info.length === 0 ||
-    Board.single_board_info.length === 0
+    User.multiple_board_info.length === 0 ||
+    User.single_board_info.length === 0
   ) {
     return <div id="name-of-board">Loading...</div>;
   }
@@ -184,7 +187,7 @@ const Board_Header_2 = ({
           onKeyDown={change_board_name}
           spellCheck={false}
         >
-          {Board.single_board_info[0].name}
+          {User.single_board_info[0].name}
         </span>
       </div>
       <button

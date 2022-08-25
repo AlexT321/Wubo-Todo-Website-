@@ -7,7 +7,7 @@ import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./utils/PrivateRoute";
 
 import Header from "./components/Home Page Comp/Header";
-import Create_Buttons from "./components/Home Page Comp/Create_Boards";
+import Create_Boards from "./components/Home Page Comp/Create_Boards";
 
 import Board_Header from "./components/Board Page Comp/Board_Header";
 import Side_Menu from "./components/Board Page Comp/Side_Menu";
@@ -19,18 +19,24 @@ import Login from "./components/Login Page Comp/Login";
 import Sign_Up from "./components/Login Page Comp/Sign_Up";
 import ForgotPassword from "./components/Login Page Comp/ForgotPassword";
 
-export const Board_Context = createContext();
+
+export const User_Context = createContext();
 
 function App() {
   const API = "http://localhost:5000";
   const [Side_Menu_visibility, set_Side_Menu_Visibility] = useState("");
   const [single_board_data, set_single_board_data] = useState([]);
   const [multiple_board_data, set_multiple_board_data] = useState([]);
+  const [single_user_data, set_single_user_data] = useState([]);
   const [move_content_to_right, set_move_content_to_right] = useState("0vh");
+  const [user_id, set_user_id] = useState("");
+
+  const [boards, set_boards] = useState();
+
 
   const create_board = async (update_Information) => {
     try {
-      const result = await fetch(API + "/Health-Website", {
+      const result = await fetch(API + "/Health-Website/create_board", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -42,12 +48,6 @@ function App() {
     } catch (err) {
       console.log(err);
     }
-  };
-
-  const get_Multiple_Board_Info = async () => {
-    const result = await fetch(API + "/Health-Website");
-    const data = await result.json();
-    return data;
   };
 
   const update_all_choosen_state = async (update_information) => {
@@ -85,24 +85,44 @@ function App() {
     }
   };
 
-  const get_Single_Board = async () => {
-    const result = await fetch(API + "/Health-Website/Single_Board");
-    const data = await result.json();
-    return data;
+  const get_Single_User = async (body) => {
+    try {
+      const result = await fetch(API + "/Health-Website/get_user", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+      const data = result.json();
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const load_board_data = async () => {
-    const single_board_data1 = await get_Single_Board();
-    const multiple_board_data1 = await get_Multiple_Board_Info();
-    set_single_board_data(single_board_data1);
-    set_multiple_board_data(multiple_board_data1);
+    const user = {
+      user_id: {user_id: user_id},
+    };
+    const user_data = await get_Single_User(user);
+    if (user_id !== "") {
+      set_single_board_data(user_data[0].boards.filter((boards) => boards.choosen === true));
+      set_single_user_data(user_data);
+      set_multiple_board_data(user_data[0].boards);
+      set_boards(user_data[0].boards);
+    }
   };
 
   return (
     <Router>
       <AuthProvider>
-        <Board_Context.Provider
+        <User_Context.Provider
           value={{
+            user_id: user_id,
+            set_user_id: set_user_id,
+            single_user_info: single_user_data,
+            set_single_user_info: set_single_user_data,
             single_board_info: single_board_data,
             multiple_board_info: multiple_board_data,
             set_single_board_info: set_single_board_data,
@@ -149,13 +169,14 @@ function App() {
                     <div id="container">
                       <Header />
                       <div id="content-body">
-                        <div id="Your-Boards">Your Boards</div>
                         <div id="Boards-container">
-                          <Create_Buttons
+                          <Create_Boards
                             create_board={create_board}
                             update_all_choosen_state={update_all_choosen_state}
                             update_choosen_state={update_choosen_state}
                             load_board_data={load_board_data}
+                            boards={boards}
+                            set_boards={set_boards}
                           />
                         </div>
                       </div>
@@ -163,42 +184,42 @@ function App() {
                   </div>
                 }
               ></Route>
-            </Route>
-            <Route
-              path="/user/:boardName"
-              element={
-                <div className="App">
-                  <div id="container-2">
-                    <Board_Header load_board_data={load_board_data} />
-                    <div id="header2-content-body-container">
-                      <Side_Menu
-                        Side_Menu_Visibility={Side_Menu_visibility}
-                        Set_Side_Menu_Visibility={set_Side_Menu_Visibility}
-                        create_board={create_board}
-                        set_move_content_to_right={set_move_content_to_right}
-                        update_all_choosen_state={update_all_choosen_state}
-                        update_choosen_state={update_choosen_state}
-                        load_board_data={load_board_data}
-                      />
-                      <ProfileOverlay />
-                      <Board_Header_2
-                        Set_Side_Menu_Visibility={set_Side_Menu_Visibility}
-                        move_content_to_right={move_content_to_right}
-                        set_move_content_to_right={set_move_content_to_right}
-                      />
-                      <div
-                        id="content-body2"
-                        style={{ left: move_content_to_right }}
-                      >
-                        <Board_List />
+              <Route
+                path="/user/:boardName"
+                element={
+                  <div className="App">
+                    <div id="container-2">
+                      <Board_Header load_board_data={load_board_data} />
+                      <div id="header2-content-body-container">
+                        <Side_Menu
+                          Side_Menu_Visibility={Side_Menu_visibility}
+                          Set_Side_Menu_Visibility={set_Side_Menu_Visibility}
+                          create_board={create_board}
+                          set_move_content_to_right={set_move_content_to_right}
+                          update_all_choosen_state={update_all_choosen_state}
+                          update_choosen_state={update_choosen_state}
+                          load_board_data={load_board_data}
+                        />
+                        <ProfileOverlay />
+                        <Board_Header_2
+                          Set_Side_Menu_Visibility={set_Side_Menu_Visibility}
+                          move_content_to_right={move_content_to_right}
+                          set_move_content_to_right={set_move_content_to_right}
+                        />
+                        <div
+                          id="content-body2"
+                          style={{ left: move_content_to_right }}
+                        >
+                          <Board_List />
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              }
-            ></Route>
+                }
+              ></Route>
+            </Route>
           </Routes>
-        </Board_Context.Provider>
+        </User_Context.Provider>
       </AuthProvider>
     </Router>
   );

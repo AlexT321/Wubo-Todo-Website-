@@ -2,7 +2,7 @@
 import { useNavigate } from "react-router-dom";
 import Menu_Boards from "./Menu_Boards";
 import { useContext, useState, useRef } from "react";
-import { Board_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
+import { User_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
 
 const Side_Menu = ({
   Side_Menu_Visibility,
@@ -13,7 +13,7 @@ const Side_Menu = ({
   update_choosen_state,
   load_board_data,
 }) => {
-  const Board = useContext(Board_Context);
+  const User = useContext(User_Context);
   const navigate = useNavigate();
 
   const [add_board_visibility, set_add_board_visibility] = useState("hidden");
@@ -57,10 +57,30 @@ const Side_Menu = ({
 
   const added_board = (e) => {
     if (e.key === "Enter") {
-      create_board({ name: e.target.value, choosen: false, favorite: false, board_lists:[], date: new Date()});
-      Board.multiple_board_info.push({
+      const random_number = Math.floor(Math.random() * 100)
+      const board_info = {
+        id: { user_id: User.user_id },
+        board_info: {
+          $push: {
+            boards: {
+              board_id: "B" + random_number,
+              name: e.target.value,
+              choosen: false,
+              favorite: false,
+              board_lists: [],
+              date: new Date(),
+            },
+          },
+        },
+      };
+      create_board(board_info);
+      User.multiple_board_info.push({
+        board_id: "B" + random_number,
         name: e.target.value,
         choosen: false,
+        favorite: false,
+        board_lists: [],
+        date: new Date(),
       });
       load_board_data();
       add_board_ref.current.value = "";
@@ -68,7 +88,7 @@ const Side_Menu = ({
     }
   };
 
-  Board.multiple_board_info.sort((a, b) => {
+  User.multiple_board_info.sort((a, b) => {
     if (a.favorite && !b.favorite) {
       return -1;
     } else if (!a.favorite && b.favorite) {
@@ -79,8 +99,8 @@ const Side_Menu = ({
   });
 
   if (
-    Board.multiple_board_info.length === 0 ||
-    Board.single_board_info.length === 0
+    User.multiple_board_info.length === 0 ||
+    User.single_board_info.length === 0
   ) {
     return <div id="menu-overlay">Loading...</div>;
   }
@@ -88,7 +108,7 @@ const Side_Menu = ({
   return (
     <div id="menu-overlay" style={{ visibility: Side_Menu_Visibility }}>
       <div id="menu-header">
-        <div id="menu-board-name">{Board.single_board_info[0].name}</div>
+        <div id="menu-board-name">{User.single_board_info[0].name}</div>
         <button className={"btn btn--primary--solid btn--tiny"} id="close-menu-button" onClick={close_menu}>-</button>
       </div>
       <div id="home-button" onClick={go_to_home_page}>Home</div>
@@ -97,11 +117,11 @@ const Side_Menu = ({
         <button className={"btn btn--primary--solid btn--tiny"} id="add-board-button" onClick={add_board} ref={add_board_button_ref}>+</button>
       </div>
       <div id="boards-container">
-        {Board.multiple_board_info.map((board, index) => (
+        {User.multiple_board_info.map((board, index) => (
           <Menu_Boards
             key={index}
             index={index}
-            board_id={board._id}
+            board_id={board.board_id}
             board_name={board.name}
             update_all_choosen_state={update_all_choosen_state}
             update_choosen_state={update_choosen_state}

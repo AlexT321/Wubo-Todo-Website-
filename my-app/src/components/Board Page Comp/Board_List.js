@@ -1,10 +1,10 @@
 import { useState, useRef, useContext } from "react";
-import { Board_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
+import { User_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
 import List from "./List";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 const Create_List = () => {
-  const Board = useContext(Board_Context);
+  const User = useContext(User_Context);
 
   const [list_visibility, set_list_visibility] = useState("hidden");
   const [create_list_visibility, set_create_list_visibility] =
@@ -129,10 +129,13 @@ const Create_List = () => {
   const create_list_component = () => {
     const random_number = Math.floor(Math.random() * 100);
     const list = {
-      id: { _id: Board.single_board_info[0]._id },
+      id: {
+        user_id: User.user_id,
+        "boards.board_id": User.single_board_info[0].board_id,
+      },
       board_lists: {
         $push: {
-          board_lists: {
+          "boards.$.board_lists": {
             unique_id: "L-" + random_number,
             name: list_name,
             cards: [],
@@ -141,11 +144,11 @@ const Create_List = () => {
       },
     };
     create_list_on_server(list);
-    Board.set_single_board_info([
+    User.set_single_board_info([
       {
-        ...Board.single_board_info[0],
+        ...User.single_board_info[0],
         board_lists: [
-          ...Board.single_board_info[0].board_lists,
+          ...User.single_board_info[0].board_lists,
           { unique_id: "L-" + random_number, name: list_name, cards: [] },
         ],
       },
@@ -154,11 +157,11 @@ const Create_List = () => {
   };
 
   // const reorder = (list, startIndex, endIndex) => {
-    // const result = Array.from(list);
-    // const [removed] = result.splice(startIndex, 1);
-    // result.splice(endIndex, 0, removed);
+  // const result = Array.from(list);
+  // const [removed] = result.splice(startIndex, 1);
+  // result.splice(endIndex, 0, removed);
 
-    // return result;
+  // return result;
   // };
 
   function handleOnDragEnd(result) {
@@ -167,23 +170,25 @@ const Create_List = () => {
     if (result.type === "doppableItem") {
       const remove_list_info = {
         list_id: {
-          _id: Board.single_board_info[0]._id,
+          user_id: User.user_id,
+          "boards.board_id": User.single_board_info[0].board_id,
         },
         lists: {
-          $pull: { board_lists: { unique_id: result.draggableId } },
+          $pull: { "boards.$.board_lists": { unique_id: result.draggableId } },
         },
       };
       remove_list_from_board(remove_list_info);
-      const items = Array.from(Board.single_board_info[0].board_lists);
+      const items = Array.from(User.single_board_info[0].board_lists);
       const [reorderedItem] = items.splice(result.source.index, 1);
       items.splice(result.destination.index, 0, reorderedItem);
       const add_card_info = {
         list_id: {
-          _id: Board.single_board_info[0]._id,
+          user_id: User.user_id,
+          "boards.board_id": User.single_board_info[0].board_id,
         },
         lists: {
           $push: {
-            board_lists: {
+            "boards.$.board_lists": {
               $each: [
                 {
                   unique_id: reorderedItem.unique_id,
@@ -197,14 +202,14 @@ const Create_List = () => {
         },
       };
       add_list_at_position(add_card_info);
-      Board.set_single_board_info([
+      User.set_single_board_info([
         {
-          ...Board.single_board_info[0],
+          ...User.single_board_info[0],
           board_lists: [...items],
         },
       ]);
     } else if (result.type === "droppableSubItem") {
-      const itemSubItemMap = Board.single_board_info[0].board_lists.reduce(
+      const itemSubItemMap = User.single_board_info[0].board_lists.reduce(
         (result, item) => {
           result[item.unique_id] = item;
           return result;
@@ -216,8 +221,8 @@ const Create_List = () => {
       const destinationParentId = result.destination.droppableId;
       const sourceSubItems = itemSubItemMap[sourceParentId];
       const destinationSubItems = itemSubItemMap[destinationParentId];
-      
-      let newItems = [...Board.single_board_info[0].board_lists];
+
+      let newItems = [...User.single_board_info[0].board_lists];
 
       if (sourceParentId === destinationParentId) {
         const list_index = newItems.findIndex(
@@ -225,46 +230,62 @@ const Create_List = () => {
         );
         const remove_card_info = {
           list_id: {
-            _id: Board.single_board_info[0]._id,
-            "board_lists.unique_id":
-              Board.single_board_info[0].board_lists[list_index].unique_id,
+            user_id: User.user_id,
           },
           cards: {
-            $pull: { "board_lists.$.cards": { id: result.draggableId } },
+            $pull: { "boards.$[i].board_lists.$[j].cards": { id: result.draggableId } },
+          },
+          filter: {
+            arrayFilters: [
+              {
+                "i.board_id": User.single_board_info[0].board_id,
+              },
+              {
+                "j.unique_id": result.source.droppableId,
+              },
+            ],
           },
         };
         remove_card_from_list(remove_card_info);
         const items = Array.from(
-          Board.single_board_info[0].board_lists[list_index].cards
+          User.single_board_info[0].board_lists[list_index].cards
         );
         const [reorderedItem] = items.splice(result.source.index, 1);
         items.splice(result.destination.index, 0, reorderedItem);
         const add_card_info = {
           list_id: {
-            _id: Board.single_board_info[0]._id,
-            "board_lists.unique_id":
-              Board.single_board_info[0].board_lists[list_index].unique_id,
+            user_id: User.user_id,
           },
           cards: {
             $push: {
-              "board_lists.$.cards": {
+              "boards.$[i].board_lists.$[j].cards": {
                 $each: [{ id: result.draggableId, name: reorderedItem.name }],
                 $position: result.destination.index,
               },
             },
           },
+          filter: {
+            arrayFilters: [
+              {
+                "i.board_id": User.single_board_info[0].board_id,
+              },
+              {
+                "j.unique_id": result.source.droppableId,
+              },
+            ],
+          }
         };
         add_card_at_position_list(add_card_info);
-        Board.set_single_board_info([
+        User.set_single_board_info([
           {
-            ...Board.single_board_info[0],
+            ...User.single_board_info[0],
             board_lists: [
-              ...Board.single_board_info[0].board_lists.slice(0, list_index),
+              ...User.single_board_info[0].board_lists.slice(0, list_index),
               {
-                ...Board.single_board_info[0].board_lists[list_index],
+                ...User.single_board_info[0].board_lists[list_index],
                 cards: items,
               },
-              ...Board.single_board_info[0].board_lists.slice(list_index + 1),
+              ...User.single_board_info[0].board_lists.slice(list_index + 1),
             ],
           },
         ]);
@@ -285,99 +306,116 @@ const Create_List = () => {
           (item) => item.unique_id === destinationParentId
         );
 
+        console.log(result.source.droppableId);
+
         const remove_card_info = {
           list_id: {
-            _id: Board.single_board_info[0]._id,
-            "board_lists.unique_id":
-              Board.single_board_info[0].board_lists[source_list_index]
-                .unique_id,
+            user_id: User.user_id,
           },
           cards: {
-            $pull: { "board_lists.$.cards": { id: result.draggableId } },
+            $pull: { "boards.$[i].board_lists.$[j].cards": { id: result.draggableId } },
           },
+          filter: {
+            arrayFilters: [
+              {
+                "i.board_id": User.single_board_info[0].board_id,
+              },
+              {
+                "j.unique_id": result.source.droppableId,
+              },
+            ]
+          }
         };
         remove_card_from_list(remove_card_info);
 
         const add_card_info = {
           list_id: {
-            _id: Board.single_board_info[0]._id,
-            "board_lists.unique_id":
-              Board.single_board_info[0].board_lists[dest_list_index].unique_id,
+            user_id: User.user_id,
           },
           cards: {
             $push: {
-              "board_lists.$.cards": {
+              "boards.$[i].board_lists.$[j].cards": {
                 $each: [{ id: result.draggableId, name: draggedItem.name }],
                 $position: result.destination.index,
               },
             },
           },
+          filter: {
+            arrayFilters: [
+              {
+                "i.board_id": User.single_board_info[0].board_id,
+              },
+              {
+                "j.unique_id": result.destination.droppableId,
+              },
+            ]
+          }
         };
         add_card_at_position_list(add_card_info);
 
         if (source_list_index < dest_list_index) {
-          Board.set_single_board_info([
+          User.set_single_board_info([
             {
-              ...Board.single_board_info[0],
+              ...User.single_board_info[0],
               board_lists: [
-                ...Board.single_board_info[0].board_lists.slice(
+                ...User.single_board_info[0].board_lists.slice(
                   0,
                   source_list_index
                 ),
                 {
-                  ...Board.single_board_info[0].board_lists[source_list_index],
+                  ...User.single_board_info[0].board_lists[source_list_index],
                   cards: [
-                    ...Board.single_board_info[0].board_lists[
+                    ...User.single_board_info[0].board_lists[
                       source_list_index
                     ].cards.slice(0, result.source.index),
-                    ...Board.single_board_info[0].board_lists[
+                    ...User.single_board_info[0].board_lists[
                       source_list_index
                     ].cards.slice(result.source.index + 1),
                   ],
                 },
-                ...Board.single_board_info[0].board_lists.slice(
+                ...User.single_board_info[0].board_lists.slice(
                   source_list_index + 1,
                   dest_list_index
                 ),
                 {
-                  ...Board.single_board_info[0].board_lists[dest_list_index],
+                  ...User.single_board_info[0].board_lists[dest_list_index],
                   cards: newDestSubItems,
                 },
-                ...Board.single_board_info[0].board_lists.slice(
+                ...User.single_board_info[0].board_lists.slice(
                   dest_list_index + 1
                 ),
               ],
             },
           ]);
         } else {
-          Board.set_single_board_info([
+          User.set_single_board_info([
             {
-              ...Board.single_board_info[0],
+              ...User.single_board_info[0],
               board_lists: [
-                ...Board.single_board_info[0].board_lists.slice(
+                ...User.single_board_info[0].board_lists.slice(
                   0,
                   dest_list_index
                 ),
                 {
-                  ...Board.single_board_info[0].board_lists[dest_list_index],
+                  ...User.single_board_info[0].board_lists[dest_list_index],
                   cards: newDestSubItems,
                 },
-                ...Board.single_board_info[0].board_lists.slice(
+                ...User.single_board_info[0].board_lists.slice(
                   dest_list_index + 1,
                   source_list_index
                 ),
                 {
-                  ...Board.single_board_info[0].board_lists[source_list_index],
+                  ...User.single_board_info[0].board_lists[source_list_index],
                   cards: [
-                    ...Board.single_board_info[0].board_lists[
+                    ...User.single_board_info[0].board_lists[
                       source_list_index
                     ].cards.slice(0, result.source.index),
-                    ...Board.single_board_info[0].board_lists[
+                    ...User.single_board_info[0].board_lists[
                       source_list_index
                     ].cards.slice(result.source.index + 1),
                   ],
                 },
-                ...Board.single_board_info[0].board_lists.slice(
+                ...User.single_board_info[0].board_lists.slice(
                   source_list_index + 1
                 ),
               ],
@@ -389,8 +427,8 @@ const Create_List = () => {
   }
 
   if (
-    Board.multiple_board_info.length === 0 ||
-    Board.single_board_info.length === 0
+    User.multiple_board_info.length === 0 ||
+    User.single_board_info.length === 0
   ) {
     return <div id="menu-overlay">Loading...</div>;
   }
@@ -409,7 +447,7 @@ const Create_List = () => {
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
-              {Board.single_board_info[0].board_lists.map((board, index) => {
+              {User.single_board_info[0].board_lists.map((board, index) => {
                 return (
                   <Draggable
                     key={board.unique_id}
