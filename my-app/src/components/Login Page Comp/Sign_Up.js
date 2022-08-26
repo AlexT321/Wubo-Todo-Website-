@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/context/AuthContext";
 import { useRef, useState } from "react";
+import BoardService from "../../services/boardService";
 
 const Sign_Up = () => {
   const navigate = useNavigate();
@@ -15,20 +16,6 @@ const Sign_Up = () => {
   const [user_id, set_user_id] = useState("");
 
 
-  const createUser = async (body) => {
-    const result = await fetch(
-      "http://localhost:5000/Health-Website/create_user",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      }
-    );
-    // eslint-disable-next-line no-unused-vars
-    const data = result.json();
-  };
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -45,8 +32,8 @@ const Sign_Up = () => {
         boards: [],
         date: new Date(),
       };
+      BoardService.create_user(user);
       console.log("success");
-      createUser(user);
     } catch (error) {
       console.log(error);
       setError("Failed to create an account");

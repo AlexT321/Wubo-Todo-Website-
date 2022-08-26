@@ -2,6 +2,8 @@ import { useState, useRef, useContext } from "react";
 import { User_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
 import List from "./List";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import ListService from "../../services/listService";
+import CardService from "../../services/cardService";
 
 const Create_List = () => {
   const User = useContext(User_Context);
@@ -32,100 +34,6 @@ const Create_List = () => {
   };
   document.addEventListener("click", handleClickOutside);
 
-  const create_list_on_server = async (body) => {
-    try {
-      const result = await fetch(
-        "http://localhost:5000/Health-Website/create_board_list",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(body),
-        }
-      );
-      // eslint-disable-next-line no-unused-vars
-      const data = result.json();
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const remove_list_from_board = async (body) => {
-    try {
-      const result = await fetch(
-        "http://localhost:5000/Health-Website/remove_list_from_board",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(body),
-        }
-      );
-      // eslint-disable-next-line no-unused-vars
-      const data = result.json();
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const add_list_at_position = async (body) => {
-    try {
-      const result = await fetch(
-        "http://localhost:5000/Health-Website/add_list_to_board_at_position",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(body),
-        }
-      );
-      // eslint-disable-next-line no-unused-vars
-      const data = result.json();
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const remove_card_from_list = async (body) => {
-    try {
-      const result = await fetch(
-        "http://localhost:5000/Health-Website/remove_card_from_list",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(body),
-        }
-      );
-      // eslint-disable-next-line no-unused-vars
-      const data = result.json();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  const add_card_at_position_list = async (body) => {
-    try {
-      const result = await fetch(
-        "http://localhost:5000/Health-Website/add_card_to_list_at_position",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(body),
-        }
-      );
-      // eslint-disable-next-line no-unused-vars
-      const data = result.json();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const create_list_component = () => {
     const random_number = Math.floor(Math.random() * 100);
     const list = {
@@ -143,7 +51,7 @@ const Create_List = () => {
         },
       },
     };
-    create_list_on_server(list);
+    ListService.create_board_list(list);
     User.set_single_board_info([
       {
         ...User.single_board_info[0],
@@ -177,7 +85,7 @@ const Create_List = () => {
           $pull: { "boards.$.board_lists": { unique_id: result.draggableId } },
         },
       };
-      remove_list_from_board(remove_list_info);
+      ListService.remove_list_from_board(remove_list_info);
       const items = Array.from(User.single_board_info[0].board_lists);
       const [reorderedItem] = items.splice(result.source.index, 1);
       items.splice(result.destination.index, 0, reorderedItem);
@@ -201,7 +109,7 @@ const Create_List = () => {
           },
         },
       };
-      add_list_at_position(add_card_info);
+      ListService.add_list_to_board_at_position(add_card_info);
       User.set_single_board_info([
         {
           ...User.single_board_info[0],
@@ -246,7 +154,7 @@ const Create_List = () => {
             ],
           },
         };
-        remove_card_from_list(remove_card_info);
+        CardService.remove_card_from_list(remove_card_info);
         const items = Array.from(
           User.single_board_info[0].board_lists[list_index].cards
         );
@@ -275,7 +183,7 @@ const Create_List = () => {
             ],
           }
         };
-        add_card_at_position_list(add_card_info);
+        CardService.add_card_to_list_at_position(add_card_info);
         User.set_single_board_info([
           {
             ...User.single_board_info[0],
@@ -326,7 +234,7 @@ const Create_List = () => {
             ]
           }
         };
-        remove_card_from_list(remove_card_info);
+        CardService.remove_card_from_list(remove_card_info);
 
         const add_card_info = {
           list_id: {
@@ -351,7 +259,7 @@ const Create_List = () => {
             ]
           }
         };
-        add_card_at_position_list(add_card_info);
+        CardService.add_card_to_list_at_position(add_card_info);
 
         if (source_list_index < dest_list_index) {
           User.set_single_board_info([

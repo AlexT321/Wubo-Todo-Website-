@@ -19,11 +19,12 @@ import Login from "./components/Login Page Comp/Login";
 import Sign_Up from "./components/Login Page Comp/Sign_Up";
 import ForgotPassword from "./components/Login Page Comp/ForgotPassword";
 
+import UserService from "./services/userService";
+
 
 export const User_Context = createContext();
 
 function App() {
-  const API = "http://localhost:5000";
   const [Side_Menu_visibility, set_Side_Menu_Visibility] = useState("");
   const [single_board_data, set_single_board_data] = useState([]);
   const [multiple_board_data, set_multiple_board_data] = useState([]);
@@ -33,79 +34,11 @@ function App() {
 
   const [boards, set_boards] = useState();
 
-
-  const create_board = async (update_Information) => {
-    try {
-      const result = await fetch(API + "/Health-Website/create_board", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(update_Information),
-      });
-      // eslint-disable-next-line no-unused-vars
-      const data = result.json();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const update_all_choosen_state = async (update_information) => {
-    try {
-      const result = await fetch(
-        API + "/Health-Website/update_all_choosen_state",
-        {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(update_information),
-        }
-      );
-      // eslint-disable-next-line no-unused-vars
-      const data = result.json();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const update_choosen_state = async (board_id) => {
-    try {
-      const result = await fetch(API + "/Health-Website/update_choosen_state", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(board_id),
-      });
-      // eslint-disable-next-line no-unused-vars
-      const data = result.json();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const get_Single_User = async (body) => {
-    try {
-      const result = await fetch(API + "/Health-Website/get_user", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(body),
-      });
-      const data = result.json();
-      return data;
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const load_board_data = async () => {
     const user = {
       user_id: {user_id: user_id},
     };
-    const user_data = await get_Single_User(user);
+    const user_data = await UserService.loadUserData(user);
     if (user_id !== "") {
       set_single_board_data(user_data[0].boards.filter((boards) => boards.choosen === true));
       set_single_user_data(user_data);
@@ -171,9 +104,6 @@ function App() {
                       <div id="content-body">
                         <div id="Boards-container">
                           <Create_Boards
-                            create_board={create_board}
-                            update_all_choosen_state={update_all_choosen_state}
-                            update_choosen_state={update_choosen_state}
                             load_board_data={load_board_data}
                             boards={boards}
                             set_boards={set_boards}
@@ -194,10 +124,7 @@ function App() {
                         <Side_Menu
                           Side_Menu_Visibility={Side_Menu_visibility}
                           Set_Side_Menu_Visibility={set_Side_Menu_Visibility}
-                          create_board={create_board}
                           set_move_content_to_right={set_move_content_to_right}
-                          update_all_choosen_state={update_all_choosen_state}
-                          update_choosen_state={update_choosen_state}
                           load_board_data={load_board_data}
                         />
                         <ProfileOverlay />

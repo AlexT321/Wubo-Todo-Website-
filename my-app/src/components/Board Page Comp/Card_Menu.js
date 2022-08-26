@@ -1,25 +1,8 @@
 import { User_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
 import { useContext } from "react";
+import CardService from "../../services/cardService";
 const Card_Menu = ({ id, board_index, card_index }) => {
   const User = useContext(User_Context);
-  const remove_card_from_list = async (body) => {
-    try {
-      const result = await fetch(
-        "http://localhost:5000/Health-Website/remove_card_from_list",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(body),
-        }
-      );
-      // eslint-disable-next-line no-unused-vars
-      const data = result.json();
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const delete_card = () => {
     const remove_card_info = {
@@ -40,8 +23,7 @@ const Card_Menu = ({ id, board_index, card_index }) => {
         ]
       }
     };
-
-    remove_card_from_list(remove_card_info);
+    CardService.remove_card_from_list(remove_card_info);
     User.set_single_board_info([
       {
         ...User.single_board_info[0],

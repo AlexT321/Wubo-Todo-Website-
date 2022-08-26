@@ -5,10 +5,9 @@ import { User_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Hea
 
 import { useAuth } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/context/AuthContext";
 
+import BoardService from "../../services/boardService";
+
 const Create_Board_Button = ({
-  create_board,
-  update_all_choosen_state,
-  update_choosen_state,
   load_board_data,
   boards,
   set_boards,
@@ -79,7 +78,7 @@ const Create_Board_Button = ({
       },
     };
 
-    create_board(board_info);
+    BoardService.create_board(board_info);
     setBoard_name("");
     User.set_multiple_board_info([
       ...User.multiple_board_info,
@@ -148,8 +147,6 @@ const Create_Board_Button = ({
                   name={board.name}
                   key={index}
                   unique_id={board.board_id}
-                  update_all_choosen_state={update_all_choosen_state}
-                  update_choosen_state={update_choosen_state}
                   load_board_data={load_board_data}
                   set_boards={set_boards}
                 />

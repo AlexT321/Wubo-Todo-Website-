@@ -4,6 +4,7 @@ import { User_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Hea
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import List_Menu from "./List_Menu";
 import Card from "./Card";
+import CardService from "../../services/cardService";
 
 const List = forwardRef(
   ({ id, name, index, draggableProps, handleProps }, ref) => {
@@ -21,25 +22,6 @@ const List = forwardRef(
     const create_card_ref = useRef(null);
     const add_card_ref = useRef(null);
 
-    const create_card_server_side = async (body) => {
-      try {
-        const result = await fetch(
-          "http://localhost:5000/Health-Website/create_card",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(body),
-          }
-        );
-        // eslint-disable-next-line no-unused-vars
-        const data = result.json();
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
     const show_list_menu = () => {
       if (list_menu_vis === "none") {
         set_list_menu_vis("flex");
@@ -49,7 +31,6 @@ const List = forwardRef(
     };
 
     const create_card = () => {
-      console.log("create card");
       const random_number = Math.floor(Math.random() * 100);
       const card_info = {
         list_id: {
@@ -75,7 +56,7 @@ const List = forwardRef(
           ],
         },
       };
-      create_card_server_side(card_info);
+      CardService.create_card(card_info);
       User.set_single_board_info([
         {
           ...User.single_board_info[0],

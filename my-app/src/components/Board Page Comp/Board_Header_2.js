@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-pascal-case */
 import { useContext, useRef, useEffect, useState } from "react";
 import { User_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
+import BoardService from "../../services/boardService";
 
 const Board_Header_2 = ({
   Set_Side_Menu_Visibility,
@@ -24,24 +25,6 @@ const Board_Header_2 = ({
   };
 
   //Name of board
-  const update_name = async (name) => {
-    try {
-      const result = await fetch(
-        "http://localhost:5000/Health-Website/update_board_name",
-        {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(name),
-        }
-      );
-      // eslint-disable-next-line no-unused-vars
-      const data = result.json();
-    } catch (err) {
-      console.log(err);
-    }
-  };
   const change_board_name = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -50,7 +33,7 @@ const Board_Header_2 = ({
           id: { user_id: User.user_id, "boards.board_id": User.single_board_info[0].board_id},
           name: { $set: { "boards.$.name": board_name.current.innerText } },
         };
-        update_name(update_name_of_board);
+        BoardService.update_board_name(update_name_of_board);
         for (let i = 0; i < User.multiple_board_info.length; i++) {
           if (
             User.single_board_info[0].board_id ===
@@ -71,36 +54,20 @@ const Board_Header_2 = ({
   };
 
   //favorite button
-  const update_favorite = async (board_info) => {
-    try {
-      const result = await fetch(
-        "http://localhost:5000/Health-Website/update_favorite_state",
-        {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(board_info),
-        }
-      );
-      // eslint-disable-next-line no-unused-vars
-      const data = result.json();
-    } catch (err) {
-      console.log(err);
-    }
-  };
   const onClick = () => {
     set_run_once(false)
     if (is_active === "rgba(255, 255, 255, 1)") {
-      update_favorite({
+      const update_info = {
         id: { user_id: User.user_id, "boards.board_id": User.single_board_info[0].board_id},
         favorite: { $set: { "boards.$.favorite": true } },
-      });
+      }
+      BoardService.update_favorite_state(update_info);
     } else {
-      update_favorite({
+      const update_info = {
         id: { user_id: User.user_id, "boards.board_id": User.single_board_info[0].board_id},
         favorite: { $set: { "boards.$.favorite": false } },
-      });
+      }
+      BoardService.update_favorite_state(update_info);
     }
     set_is_active(
       is_active === "rgba(255, 196, 0, 1)"
@@ -152,7 +119,6 @@ const Board_Header_2 = ({
 
   useEffect(() => {
     //favorite button
-    console.log(User.single_board_info)
     if (User.single_board_info.length > 0 && run_once === true) {
       if (User.single_board_info[0].favorite) {
         set_is_active("rgba(255, 196, 0, 1)");

@@ -3,14 +3,12 @@ import { useNavigate } from "react-router-dom";
 import Menu_Boards from "./Menu_Boards";
 import { useContext, useState, useRef } from "react";
 import { User_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
+import BoardService from "../../services/boardService";
 
 const Side_Menu = ({
   Side_Menu_Visibility,
   Set_Side_Menu_Visibility,
-  create_board,
   set_move_content_to_right,
-  update_all_choosen_state,
-  update_choosen_state,
   load_board_data,
 }) => {
   const User = useContext(User_Context);
@@ -73,7 +71,7 @@ const Side_Menu = ({
           },
         },
       };
-      create_board(board_info);
+      BoardService.create_board(board_info);
       User.multiple_board_info.push({
         board_id: "B" + random_number,
         name: e.target.value,
@@ -120,11 +118,8 @@ const Side_Menu = ({
         {User.multiple_board_info.map((board, index) => (
           <Menu_Boards
             key={index}
-            index={index}
             board_id={board.board_id}
             board_name={board.name}
-            update_all_choosen_state={update_all_choosen_state}
-            update_choosen_state={update_choosen_state}
             load_board_data={load_board_data}
           />
         ))}
