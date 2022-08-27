@@ -5,7 +5,7 @@ class CardService extends FetchService {
   async create_card(body) {
     const options = this.createOption("POST", body);
     const response = await this.fetchData(
-      API + "/Health-Website/create_card",
+      API + "/card/Health-Website/create_card",
       options
     );
     return response;
@@ -13,7 +13,7 @@ class CardService extends FetchService {
   async remove_card_from_list(body) {
     const options = this.createOption("POST", body);
     const response = await this.fetchData(
-      API + "/Health-Website/remove_card_from_list",
+      API + "/card/Health-Website/remove_card_from_list",
       options
     );
     return response;
@@ -22,7 +22,7 @@ class CardService extends FetchService {
   async add_card_to_list_at_position(body) {
     const options = this.createOption("POST", body);
     const response = await this.fetchData(
-      API + "/Health-Website/add_card_to_list_at_position",
+      API + "/card/Health-Website/add_card_to_list_at_position",
       options
     );
     return response;

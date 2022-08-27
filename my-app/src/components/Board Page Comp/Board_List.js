@@ -214,8 +214,6 @@ const Create_List = () => {
           (item) => item.unique_id === destinationParentId
         );
 
-        console.log(result.source.droppableId);
-
         const remove_card_info = {
           list_id: {
             user_id: User.user_id,
