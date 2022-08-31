@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-pascal-case */
 import { useContext, useRef, useEffect, useState } from "react";
-import { User_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
+import { User_Context } from "../../App";
 import BoardService from "../../services/boardService";
 
 const Board_Header_2 = ({

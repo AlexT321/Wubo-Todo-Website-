@@ -14,10 +14,7 @@ body {
   overflow: hidden;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+/* header */
 
 #header {
   width: 100%;
@@ -77,7 +74,6 @@ code {
   flex-direction: column;
   gap: 4vh;
   z-index: 1;
-  visibility: visible;
 }
 
 #log-out {
@@ -88,6 +84,8 @@ code {
 #log-out:hover {
   text-decoration: underline;
 }
+
+/* content body */
 
 #content-body {
   width: 100%;
@@ -101,23 +99,9 @@ code {
   overflow: auto;
 }
 
-#Your-Boards {
-  font-size: 3vh;
-  color: #FFFFFF;
-  font-family: "Roboto", sans-serif;
-  width: 30vh;
-  height: 15%;
-  background-color: #536398;
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 #Boards-container {
   height: 100%;
   width: 125vh;
-  /* background-color: #2B3451; */
   border-radius: 20px;
   padding: 2em;
   display: flex;
@@ -166,38 +150,7 @@ code {
   padding-top: 2rem;
 }
 
-#boards-button {
-  width: 75%;
-  height: 4vh;
-  background-color: #46599e;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  color: #dfdfdf;
-  font-size: 1.8vh;
-  text-decoration: none;
-  border: none;
-  cursor: pointer;
-  padding-left: 2rem;
-}
-
-#favortie-button {
-  width: 75%;
-  height: 4vh;
-  background-color: #46599e;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  color: #dfdfdf;
-  font-size: 1.8vh;
-  text-decoration: none;
-  border: none;
-  cursor: pointer;
-  padding-left: 2rem;
- 
-}
-
-#log-out-button {
+.main-content-buttons {
   width: 75%;
   height: 4vh;
   background-color: #46599e;
@@ -312,67 +265,43 @@ code {
   padding: 1em;
 }
 
-#create-board-button {
-  font-size: 1.2vh;
-  padding: 1em;
-  border-radius: 20px;
-  width: 10vh;
-  height: 25%;
+.content-buttons {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #536398;
-  color: #dfdfdf;
-  border: none;
   cursor: pointer;
+  border: none;
+  color: #dfdfdf;
+  background-color: #46599e;
+  font-family: "Roboto", sans-serif;
+  border-radius: 20px;
+}
+
+#create-board-button {
+  font-size: 1.2vh;
+  padding: 1em;
+  width: 10vh;
+  height: 25%;
 }
 
 #create-board {
   width: 21vh;
   height: 10vh;
   font-size: 2.5vh;
-  font-family: "Roboto", sans-serif;
-  background-color: #46599e;
-  color: #dfdfdf;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 20px;
-  position: absolute;
-  border: none;
-  cursor: pointer;
 }
 
-.board-button {
+#board-button {
   width: 21vh;
   height: 10vh;
   font-size: 2.5vh;
-  font-family: "Roboto", sans-serif;
-  background-color: #46599e;
-  color: #dfdfdf;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 20px;
-  position: relative;
-  border: none;
-  cursor: pointer;
 }
 
 #delete-main-board-button {
   width: 2vh;
   height: 2vh;
   font-size: 1vh;
-  font-family: "Roboto", sans-serif;
-  background-color: #46599e;
-  color: #dfdfdf;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   border-radius: 2px;
   position: absolute;
   top: 8%;
   left: 88%;
-  border: none;
-  cursor: pointer;
 }

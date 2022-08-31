@@ -2,7 +2,7 @@
 import { useNavigate } from "react-router-dom";
 import Menu_Boards from "./Menu_Boards";
 import { useContext, useState, useRef } from "react";
-import { User_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
+import { User_Context } from "../../App";
 import BoardService from "../../services/boardService";
 
 const Side_Menu = ({

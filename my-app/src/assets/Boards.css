@@ -53,7 +53,7 @@
   width: 100%;
   height: 100%;
   position: absolute;
-  background: url(../assets/board_background_images/space.jpg) no-repeat center
+  background: url(../assets/board_background_images/space.webp) no-repeat center
     center fixed;
   background-size: cover;
 }
@@ -201,7 +201,6 @@
   cursor: pointer;
   font-size: 1.5vh;
   display: flex;
-
   width: 100%;
 }
 
@@ -237,15 +236,15 @@
   width: 22vh;
   height: 36vh;
   border-radius: 20px;
-  right: 1%;
-  background: #ffffff;
+  top: 4%;
+  right: 2%;
+  background: rgba(255, 255, 255, 1);
   display: flex;
   padding-top: 3vh;
   align-items: center;
   flex-direction: column;
   gap: 4vh;
   z-index: 1;
-  visibility: hidden;
 }
 
 #profile-header {

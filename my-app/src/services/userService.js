@@ -3,6 +3,7 @@ import FetchService from "./fetchService";
 const API = "http://localhost:5000";
 
 class UserService extends FetchService {
+  
   async loadUserData(body) {
     const options = this.createOption("POST", body);
     const response = await this.fetchData(API + "/user/Health-Website/get_user", options);

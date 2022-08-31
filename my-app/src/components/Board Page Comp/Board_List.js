@@ -1,5 +1,5 @@
 import { useState, useRef, useContext } from "react";
-import { User_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
+import { User_Context } from "../../App";
 import List from "./List";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import ListService from "../../services/listService";
@@ -63,14 +63,6 @@ const Create_List = () => {
     ]);
     set_list_name("");
   };
-
-  // const reorder = (list, startIndex, endIndex) => {
-  // const result = Array.from(list);
-  // const [removed] = result.splice(startIndex, 1);
-  // result.splice(endIndex, 0, removed);
-
-  // return result;
-  // };
 
   function handleOnDragEnd(result) {
     if (!result.destination) return;
@@ -141,7 +133,9 @@ const Create_List = () => {
             user_id: User.user_id,
           },
           cards: {
-            $pull: { "boards.$[i].board_lists.$[j].cards": { id: result.draggableId } },
+            $pull: {
+              "boards.$[i].board_lists.$[j].cards": { id: result.draggableId },
+            },
           },
           filter: {
             arrayFilters: [
@@ -181,7 +175,7 @@ const Create_List = () => {
                 "j.unique_id": result.source.droppableId,
               },
             ],
-          }
+          },
         };
         CardService.add_card_to_list_at_position(add_card_info);
         User.set_single_board_info([
@@ -219,7 +213,9 @@ const Create_List = () => {
             user_id: User.user_id,
           },
           cards: {
-            $pull: { "boards.$[i].board_lists.$[j].cards": { id: result.draggableId } },
+            $pull: {
+              "boards.$[i].board_lists.$[j].cards": { id: result.draggableId },
+            },
           },
           filter: {
             arrayFilters: [
@@ -229,8 +225,8 @@ const Create_List = () => {
               {
                 "j.unique_id": result.source.droppableId,
               },
-            ]
-          }
+            ],
+          },
         };
         CardService.remove_card_from_list(remove_card_info);
 
@@ -254,8 +250,8 @@ const Create_List = () => {
               {
                 "j.unique_id": result.destination.droppableId,
               },
-            ]
-          }
+            ],
+          },
         };
         CardService.add_card_to_list_at_position(add_card_info);
 

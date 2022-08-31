@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-pascal-case */
 import "./assets/App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { useState, createContext } from "react";
+import { useState, createContext, useRef } from "react";
 
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./utils/PrivateRoute";
@@ -11,7 +11,7 @@ import Create_Boards from "./components/Home Page Comp/Create_Boards";
 
 import Board_Header from "./components/Board Page Comp/Board_Header";
 import Side_Menu from "./components/Board Page Comp/Side_Menu";
-import ProfileOverlay from "./components/Board Page Comp/profile_overlay";
+import ProfileOverlay from "./components/Board Page Comp/ProfileOverlay";
 import Board_Header_2 from "./components/Board Page Comp/Board_Header_2";
 import Board_List from "./components/Board Page Comp/Board_List";
 
@@ -31,6 +31,9 @@ function App() {
   const [single_user_data, set_single_user_data] = useState([]);
   const [move_content_to_right, set_move_content_to_right] = useState("0vh");
   const [user_id, set_user_id] = useState("");
+
+  const [profile_vis, set_profile_vis] = useState("hidden");
+  const profile_ref = useRef();
 
   const [boards, set_boards] = useState();
 
@@ -119,7 +122,7 @@ function App() {
                 element={
                   <div className="App">
                     <div id="container-2">
-                      <Board_Header load_board_data={load_board_data} />
+                      <Board_Header load_board_data={load_board_data} set_profile_overlay_vis={set_profile_vis} profile_vis={profile_vis} profile_ref={profile_ref} />
                       <div id="header2-content-body-container">
                         <Side_Menu
                           Side_Menu_Visibility={Side_Menu_visibility}
@@ -127,7 +130,7 @@ function App() {
                           set_move_content_to_right={set_move_content_to_right}
                           load_board_data={load_board_data}
                         />
-                        <ProfileOverlay />
+                        <ProfileOverlay profile_vis={profile_vis} profile_ref={profile_ref}/>
                         <Board_Header_2
                           Set_Side_Menu_Visibility={set_Side_Menu_Visibility}
                           move_content_to_right={move_content_to_right}

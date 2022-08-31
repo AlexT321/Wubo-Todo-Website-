@@ -1,4 +1,4 @@
-import {useAuth} from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import {useState, useRef} from "react";
 import {useNavigate} from "react-router-dom";
 
@@ -23,7 +23,6 @@ const Header = () => {
     if (profile_overlay_ref.current && !profile_overlay_ref.current.contains(e.target) && !profile_button_ref.current.contains(e.target)) {
       set_profile_vis("hidden");
     }
-    
   };
   document.addEventListener("click", handleClickOutside);
 

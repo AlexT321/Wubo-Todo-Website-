@@ -1,9 +1,8 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Boards from "./Board";
-import { User_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
-
-import { useAuth } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/context/AuthContext";
+import { User_Context } from "../../App";
+import { useAuth } from "../../context/AuthContext";
 
 import BoardService from "../../services/boardService";
 
@@ -83,6 +82,7 @@ const Create_Board_Button = ({
     User.set_multiple_board_info([
       ...User.multiple_board_info,
       {
+        board_id: "B" + random_number,
         name: board_name,
         choosen: false,
         favorite: false,
@@ -125,16 +125,15 @@ const Create_Board_Button = ({
   return (
     <>
       <div id="side-content-container">
-        <button id="boards-button" onClick={show_boards}>
+        <button className="main-content-buttons" id="boards-button" onClick={show_boards}>
           Boards
         </button>
-        <button id="favortie-button" onClick={show_favorite_boards}>
+        <button className="main-content-buttons" id="favortie-button" onClick={show_favorite_boards}>
           Favorites
         </button>
-        <button id="log-out-button" onClick={log_out}>
+        <button className="main-content-buttons" id="log-out-button" onClick={log_out}>
           Log out
         </button>
-        
       </div>
       <div>
         <div id="main-content-container">
@@ -154,6 +153,7 @@ const Create_Board_Button = ({
             })}
             <div ref={ref} id="create-board-container">
               <button
+                className="content-buttons"
                 id="create-board"
                 onClick={onClick}
                 style={{ visibility: visibilityState_cb_btn }}
@@ -171,7 +171,7 @@ const Create_Board_Button = ({
                   value={board_name}
                   onChange={(e) => setBoard_name(e.target.value)}
                 />
-                <button id="create-board-button" onClick={create_boards}>
+                <button className="content-buttons" id="create-board-button" onClick={create_boards}>
                   Create
                 </button>
               </div>

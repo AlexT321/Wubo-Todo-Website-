@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import { useRef, useState } from "react";
 import BoardService from "../../services/boardService";
 
@@ -49,26 +49,27 @@ const Sign_Up = () => {
     <form id="main-login-container" onSubmit={handleSubmit}>
       <h1 id="login-title">Sign up</h1>
       {error && <div id="password-does-not-match">{error}</div>}
-      <div id="email-container">
-        <div id="email-title">Email:</div>
-        <input id="email-input" type="text" ref={emailRef} />
+      <div className="login-containers" id="email-container">
+        <div className="login-input-titles" id="email-title">Email:</div>
+        <input className="login-inputs" id="email-input" type="text" ref={emailRef} />
       </div>
-      <div id="password-container">
-        <div id="password-title">Password:</div>
-        <input id="password-input" type="password" ref={passwordRef} />
+      <div className="login-containers" id="password-container">
+        <div className="login-input-titles" id="password-title">Password:</div>
+        <input className="login-inputs" id="password-input" type="password" ref={passwordRef} />
       </div>
-      <div id="confirm-password-container">
-        <div id="confirm-password-title">Confirm Password:</div>
+      <div className="login-containers" id="confirm-password-container">
+        <div className="login-input-titles" id="confirm-password-title">Confirm Password:</div>
         <input
+          className="login-inputs"
           id="confirm-password-input"
           type="password"
           ref={comfirmPasswordRef}
         />
       </div>
-      <button id="sign-up-button" type="submit" disabled={loading}>
+      <button className="login-buttons" id="sign-up-button" type="submit" disabled={loading}>
         Sign up
       </button>
-      <div id="sign-up-go-back" onClick={go_back}>
+      <div className="login-texts" id="sign-up-go-back" onClick={go_back}>
         Already have an account
       </div>
     </form>

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import { useRef, useState, useContext } from "react";
-import { User_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
+import { User_Context } from "../../App";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -40,21 +40,21 @@ const Login = () => {
     <form id="main-login-container" onSubmit={handleSubmit}>
       <h1 id="login-title">Login</h1>
       {error && <div id="fail-to-login">{error}</div>}
-      <div id="email-container">
-        <div id="email-title">Email:</div>
-        <input id="email-input" type="text" ref={emailRef} />
+      <div className="login-containers" id="email-container">
+        <div className="login-input-titles" id="email-title">Email:</div>
+        <input className="login-inputs" id="email-input" type="text" ref={emailRef} />
       </div>
-      <div id="password-container">
-        <div id="password-title">Password:</div>
-        <input id="password-input" type="password" ref={passwordRef} />
+      <div className="login-containers" id="password-container">
+        <div className="login-input-titles" id="password-title">Password:</div>
+        <input className="login-inputs" id="password-input" type="password" ref={passwordRef} />
       </div>
-      <button id="login-button" disabled={loading}>
+      <button className="login-buttons" id="login-button" disabled={loading}>
         login
       </button>
-      <div id="forgot-password-container" onClick={go_to_forgot_password_page}>
+      <div className="login-texts" id="forgot-password-container" onClick={go_to_forgot_password_page}>
         Forgot Password?
       </div>
-      <div id="create-account-container" onClick={go_to_sign_up_page}>
+      <div className="login-texts" id="create-account-container" onClick={go_to_sign_up_page}>
         Create your account
       </div>
     </form>

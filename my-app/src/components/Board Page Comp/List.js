@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-pascal-case */
 import { useState, useRef, useContext, forwardRef } from "react";
-import { User_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
+import { User_Context } from "../../App";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import List_Menu from "./List_Menu";
 import Card from "./Card";

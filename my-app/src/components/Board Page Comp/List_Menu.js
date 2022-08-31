@@ -1,4 +1,4 @@
-import { User_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
+import { User_Context } from "../../App";
 import { useContext} from "react";
 import ListService from "../../services/listService";
 

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { User_Context } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/App";
+import { User_Context } from "../../App";
 import {useContext} from "react";
 import BoardService from "../../services/boardService";
 
@@ -36,15 +36,15 @@ const Board = ({
     if (unique_id !== undefined) {
       BoardService.remove_board(boards_info);
     }
-    User.set_multiple_board_info(User.multiple_board_info.filter((board,index) => board.board_id !== unique_id));
-    set_boards(User.multiple_board_info.filter((board,index) => board.board_id !== unique_id));
+    User.set_multiple_board_info(User.multiple_board_info.filter((board) => board.board_id !== unique_id));
+    set_boards(User.multiple_board_info.filter((board) => board.board_id !== unique_id));
   }
   return (
     <div id="create-board-container">
-      <button className="board-button" onClick={onClick}>
+      <button className="content-buttons" id="board-button" onClick={onClick}>
         {name}
       </button>
-      <button id="delete-main-board-button" onClick={delete_board}>X</button>
+      <button className="content-buttons" id="delete-main-board-button" onClick={delete_board}>X</button>
     </div>
   );
 };
