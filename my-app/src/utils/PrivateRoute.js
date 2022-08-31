@@ -1,5 +1,5 @@
 import {Navigate, Outlet} from "react-router-dom";
-import { useAuth } from "C:/Users/alexi/Downloads/VsCode Projects/Wubo (Health Website)/Health-Website/my-app/src/context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 const PrivateRoute = () => {
   const { currentUser } = useAuth();
   return (

@@ -12,8 +12,8 @@ const Sign_Up = () => {
   const { signup } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [user_id, set_user_id] = useState("");
+  //const [success, setSuccess] = useState(false);
+  //const [user_id, set_user_id] = useState("");
 
 
 
