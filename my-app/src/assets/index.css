@@ -28,21 +28,23 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 17vh;
+  width: 20vh;
   height: 100%;
   gap: 1vh;
 }
 
 #logo {
-  width: 5vh;
-  height: 50%;
-  background-color: #4971BE;
+  width: 20vh;
+  height: 100%;
+  background-color: #3552af;
+  cursor: pointer;
 }
 
 #name {
   font-size: 3.5vh;
   color: #FFFFFF;
   font-family: "Roboto", sans-serif;
+  cursor: pointer;
 }
 
 #profile-container {
@@ -58,6 +60,11 @@ body {
   height: 8vh;
   border-radius: 50%;
   background-color: #5462E1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(255, 255, 255);
+  font-size: 1.5em;
 }
 
 #home-profile-overlay {
@@ -294,6 +301,10 @@ body {
   width: 21vh;
   height: 10vh;
   font-size: 2.5vh;
+  background: url(../assets/board_background_images/space.webp);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
 }
 
 #delete-main-board-button {
@@ -302,6 +313,7 @@ body {
   font-size: 1vh;
   border-radius: 2px;
   position: absolute;
+  background: none;
   top: 8%;
   left: 88%;
 }

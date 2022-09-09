@@ -125,6 +125,7 @@ const Board_Header_2 = ({
       } else {
         set_is_active("rgba(255, 255, 255, 1)");
       }
+
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [User.single_board_info]);

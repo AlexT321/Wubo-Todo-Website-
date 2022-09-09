@@ -1,0 +1,167 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+img {
+  max-width:100%;
+          height:auto;
+}
+
+
+#go_home {
+  height: 100%;
+  width: 35vh;
+  border: none;
+  background-color: #0E1A43;
+  color: rgb(240, 240, 240);
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+#main-body {
+  width: 100%;
+  height: 90vh;
+  background: #242B43;
+  background: linear-gradient(0deg, rgba(65,76,115,1) 0%, rgba(36,43,67,1) 71%, rgba(36,43,67,1) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#content-container {
+  width: 180vh;
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+#main-text-container {
+  width: 100vh;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 6em;
+  padding-left: 6em;
+}
+
+#main-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+
+#main-title {
+  text-align: left;
+  font-size: 5em;
+  color: rgb(255, 255, 255);
+}
+
+#main-description {
+  text-align: left;
+  font-weight:normal;
+  color: rgb(255, 255, 255);
+}
+
+#create-account-container-2 {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8em;
+}
+
+#create-account-header {
+  text-align: left;
+  font-weight:normal;
+  color: rgb(255, 255, 255);
+}
+
+#create-account {
+  width: 30vh;
+  height: 8vh;
+  background-color: #445cb4;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color:rgb(250, 250, 250);
+  font-size: 1.2em;
+  cursor: pointer;
+  border: none;
+}
+
+#main-picture-container {
+  width: 80vh;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 1555px) {
+  #main-picture-container {
+    display: none;
+  }
+  #main-text-container {
+    width: 80%;
+  }
+  #content-container {
+    overflow: auto;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  #main-title {
+    font-size: 2em;
+  }
+  #main-text-container {
+    width: 90%;
+    padding-left: 0rem;
+  }
+  #content-content {
+    display: flex;
+    align-items: center;
+   
+  }
+  #go_home {
+    width: 20vh;
+    font-size: 1em;
+  }
+}
+
+@media only screen and (max-height: 900px) {
+  #go_home {
+    width: 50vh;
+    font-size: 1em;
+  }
+  #main-title {
+    font-size: 2em;
+  }
+  #create-account {
+    font-size: 0.8em;
+  }
+}
+
+@media only screen and (max-height: 400px) {
+  #go_home {
+    width: 50vh;
+    font-size: 1em;
+  }
+  #main-title {
+    font-size: 1em;
+  }
+  #create-account {
+    font-size: 0.8em;
+  }
+
+  #main-description {
+    font-size: 0.6em;
+  }
+
+  #main-text-container {
+    gap: 2em;
+  }
+}

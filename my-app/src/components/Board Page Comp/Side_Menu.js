@@ -9,7 +9,6 @@ const Side_Menu = ({
   Side_Menu_Visibility,
   Set_Side_Menu_Visibility,
   set_move_content_to_right,
-  load_board_data,
 }) => {
   const User = useContext(User_Context);
   const navigate = useNavigate();
@@ -80,7 +79,7 @@ const Side_Menu = ({
         board_lists: [],
         date: new Date(),
       });
-      load_board_data();
+      User.load_board_data();
       add_board_ref.current.value = "";
       set_add_board_visibility("hidden");
     }
@@ -120,7 +119,6 @@ const Side_Menu = ({
             key={index}
             board_id={board.board_id}
             board_name={board.name}
-            load_board_data={load_board_data}
           />
         ))}
         <input

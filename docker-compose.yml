@@ -1,0 +1,50 @@
+version: '3.9'
+
+services:
+  mongo:
+    image: mongo
+    restart: always
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+  server:
+    build:
+      context: ./my-app/src/Server
+      dockerfile: Dockerfile
+    image: my-app-server
+    container_name: my-app-server
+    command: npm run dev
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+    environment:
+      - "NODE_ENV=development"
+    networks:
+      - app-network
+  client:
+    build:
+      context: ./my-app
+      dockerfile: Dockerfile
+    image: my-app-client
+    container_name: my-app-react-client
+    command: npm start
+    depends_on:
+      - server
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
+  node_modules:
+  web-root:
+    driver: local

@@ -5,10 +5,12 @@ import {useNavigate} from "react-router-dom";
 
 const ProfileOverlay = ({profile_vis, profile_ref}) => {
   const {currentUser, logout} = useAuth();
+
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const log_out = async() => {
+    console.log(error)
     try {
       await logout();
       navigate("/login");

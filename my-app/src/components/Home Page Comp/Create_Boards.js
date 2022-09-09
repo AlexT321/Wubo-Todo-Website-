@@ -6,11 +6,7 @@ import { useAuth } from "../../context/AuthContext";
 
 import BoardService from "../../services/boardService";
 
-const Create_Board_Button = ({
-  load_board_data,
-  boards,
-  set_boards,
-}) => {
+const Create_Board_Button = () => {
   const { currentUser, logout } = useAuth();
   const User = useContext(User_Context);
   const navigate = useNavigate();
@@ -36,12 +32,12 @@ const Create_Board_Button = ({
 
   const show_boards = () => {
     set_board_title("Your Boards");
-    set_boards(User.multiple_board_info);
+    User.set_boards(User.multiple_board_info);
   };
 
   const show_favorite_boards = () => {
     set_board_title("Favorite Boards");
-    set_boards(
+    User.set_boards(
       User.multiple_board_info.filter((boards) => boards.favorite === true)
     );
   };
@@ -90,7 +86,7 @@ const Create_Board_Button = ({
         date: new Date(),
       },
     ]);
-    load_board_data();
+    User.load_board_data();
   };
 
   User.multiple_board_info.sort((a, b) => {
@@ -113,25 +109,38 @@ const Create_Board_Button = ({
 
   useEffect(() => {
     User.set_user_id(currentUser.uid);
-    load_board_data();
-
+    User.load_board_data();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [User.user_id]);
 
-  if (boards === undefined) {
+  if (
+    User.boards.length === undefined 
+  ) {
     return <div id="menu-overlay">Loading...</div>;
   }
 
   return (
     <>
       <div id="side-content-container">
-        <button className="main-content-buttons" id="boards-button" onClick={show_boards}>
+        <button
+          className="main-content-buttons"
+          id="boards-button"
+          onClick={show_boards}
+        >
           Boards
         </button>
-        <button className="main-content-buttons" id="favortie-button" onClick={show_favorite_boards}>
+        <button
+          className="main-content-buttons"
+          id="favortie-button"
+          onClick={show_favorite_boards}
+        >
           Favorites
         </button>
-        <button className="main-content-buttons" id="log-out-button" onClick={log_out}>
+        <button
+          className="main-content-buttons"
+          id="log-out-button"
+          onClick={log_out}
+        >
           Log out
         </button>
       </div>
@@ -140,14 +149,12 @@ const Create_Board_Button = ({
           <div id="boards-title">{board_title}</div>
 
           <div id="boards-container-2">
-            {boards.map((board, index) => {
+            {User.boards.map((board, index) => {
               return (
                 <Boards
                   name={board.name}
                   key={index}
                   unique_id={board.board_id}
-                  load_board_data={load_board_data}
-                  set_boards={set_boards}
                 />
               );
             })}
@@ -171,7 +178,11 @@ const Create_Board_Button = ({
                   value={board_name}
                   onChange={(e) => setBoard_name(e.target.value)}
                 />
-                <button className="content-buttons" id="create-board-button" onClick={create_boards}>
+                <button
+                  className="content-buttons"
+                  id="create-board-button"
+                  onClick={create_boards}
+                >
                   Create
                 </button>
               </div>

@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const monk = require("monk");
 
-const db = monk(process.env.MONGO_URI || "localhost/Health-Website");
+const db = monk(process.env.MONGO_URI || "mongodb://localhost:27017/Health-Website");
 const users = db.get("Users");
 
 router.post("/Health-Website/create_card", (req, res) => {

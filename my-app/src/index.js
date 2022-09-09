@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './assets/index.css';
 import './assets/Boards.css';
 import './assets/Login.css';
+import './assets/Main.css'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 

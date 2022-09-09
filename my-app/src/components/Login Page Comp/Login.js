@@ -22,7 +22,7 @@ const Login = () => {
       const result = await login(emailRef.current.value, passwordRef.current.value);
       User.set_user_id(result.user.uid);
       
-      navigate("/");
+      navigate("/home");
     } catch (error) {
       console.log(error);
       setError("Failed to Login");

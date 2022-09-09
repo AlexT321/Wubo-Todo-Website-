@@ -6,8 +6,6 @@ import BoardService from "../../services/boardService";
 const Board = ({
   name,
   unique_id,
-  load_board_data,
-  set_boards
 }) => {
   const User = useContext(User_Context);
 
@@ -25,7 +23,7 @@ const Board = ({
     };
     await BoardService.update_all_choosen_state(update_all_info);
     await BoardService.update_choosen_state(update_info);
-    await load_board_data();
+    await User.load_board_data();
   };
   
   const delete_board = () => {
@@ -37,7 +35,7 @@ const Board = ({
       BoardService.remove_board(boards_info);
     }
     User.set_multiple_board_info(User.multiple_board_info.filter((board) => board.board_id !== unique_id));
-    set_boards(User.multiple_board_info.filter((board) => board.board_id !== unique_id));
+    User.set_boards(User.multiple_board_info.filter((board) => board.board_id !== unique_id));
   }
   return (
     <div id="create-board-container">

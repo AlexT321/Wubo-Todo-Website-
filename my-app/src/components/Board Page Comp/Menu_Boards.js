@@ -7,7 +7,6 @@ import BoardService from "../../services/boardService";
 const Menu_Boards = ({
   board_id,
   board_name,
-  load_board_data,
 }) => {
   const User = useContext(User_Context);
 
@@ -29,7 +28,7 @@ const Menu_Boards = ({
     };
     await BoardService.update_all_choosen_state(update_all_info);
     await BoardService.update_choosen_state(update_info);
-    await load_board_data();
+    await User.load_board_data();
   };
 
   const toggleHover = () => {
