@@ -64,6 +64,7 @@ const Create_Board_Button = () => {
           boards: {
             board_id: "B" + random_number,
             name: board_name,
+            board_background_img: `img${User.multiple_board_info.length + 1}`,
             choosen: false,
             favorite: false,
             board_lists: [],
@@ -80,6 +81,7 @@ const Create_Board_Button = () => {
       {
         board_id: "B" + random_number,
         name: board_name,
+        board_background_img: `img${User.multiple_board_info.length + 1}`,
         choosen: false,
         favorite: false,
         board_lists: [],
@@ -155,6 +157,7 @@ const Create_Board_Button = () => {
                   name={board.name}
                   key={index}
                   unique_id={board.board_id}
+                  img={board.board_background_img}
                 />
               );
             })}

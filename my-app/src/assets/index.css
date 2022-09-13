@@ -301,7 +301,7 @@ body {
   width: 21vh;
   height: 10vh;
   font-size: 2.5vh;
-  background: url(../assets/board_background_images/space.webp);
+  /* background: url(../assets/board_background_images/img1.webp); */
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;

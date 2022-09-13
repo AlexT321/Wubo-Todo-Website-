@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useRef, useState } from "react";
-import BoardService from "../../services/boardService";
+import UserService from "../../services/userService"
 
 const Sign_Up = () => {
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ const Sign_Up = () => {
         boards: [],
         date: new Date(),
       };
-      BoardService.create_user(user);
+      UserService.create_user(user);
       console.log("success");
     } catch (error) {
       console.log(error);

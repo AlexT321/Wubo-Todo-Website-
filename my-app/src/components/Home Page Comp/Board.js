@@ -6,10 +6,14 @@ import BoardService from "../../services/boardService";
 const Board = ({
   name,
   unique_id,
+  img
 }) => {
   const User = useContext(User_Context);
 
   const navigate = useNavigate();
+
+  const background_img = require(`../../assets/board_background_images/${img}.webp`)
+  
 
   const onClick = async () => {
     navigate(`/user/${name}`);
@@ -39,7 +43,7 @@ const Board = ({
   }
   return (
     <div id="create-board-container">
-      <button className="content-buttons" id="board-button" onClick={onClick}>
+      <button className="content-buttons" id="board-button" loading="lazy" onClick={onClick} style={{ backgroundImage: `url(${background_img})`}}>
         {name}
       </button>
       <button className="content-buttons" id="delete-main-board-button" onClick={delete_board}>X</button>

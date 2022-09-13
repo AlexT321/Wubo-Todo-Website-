@@ -53,8 +53,9 @@
   width: 100%;
   height: 100%;
   position: absolute;
-  background: url(../assets/board_background_images/space.webp) no-repeat center
-    center fixed;
+  /* background: url(../assets/board_background_images/img1.webp); */
+  background-repeat: no-repeat;
+  background-position: center center;
   background-size: cover;
 }
 
