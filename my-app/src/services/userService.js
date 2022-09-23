@@ -16,6 +16,18 @@ class UserService extends FetchService {
     return response;
 
   }
+
+  async reduce_remaining_boards(body) {
+    const options = this.createOption("POST", body);
+    const response = await this.fetchData(API + "/user/Health-Website/reduce_remaining_boards", options);
+    return response;
+  }
+
+  async increase_remaining_boards(body) {
+    const options = this.createOption("POST", body);
+    const response = await this.fetchData(API + "/user/Health-Website/increase_remaining_boards", options);
+    return response;
+  }
 }
 
 export default new UserService();

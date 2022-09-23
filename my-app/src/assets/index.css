@@ -38,6 +38,14 @@ body {
   height: 100%;
   background-color: #3552af;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#logo-home {
+  height: 80%;
+  width: 80%
 }
 
 #name {
@@ -64,7 +72,7 @@ body {
   align-items: center;
   justify-content: center;
   color: rgb(255, 255, 255);
-  font-size: 1.5em;
+  font-size: 4.5vh;
 }
 
 #home-profile-overlay {
@@ -137,14 +145,6 @@ body {
   }
 }
 
-@media only screen and (max-width: 790px) {
-  #Boards-container {
-    width: 90%;
-    height: 80%;
-    margin-top: 10vh;
-  }
-}
-
 #side-content-container {
   height: 70vh;
   width: 30vh;
@@ -172,27 +172,6 @@ body {
   padding-left: 2rem;
 }
 
-@media only screen and (max-width: 1050px) {
-  #side-content-container {
-    width: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 2em;
-    border-radius: 10px;
-  }
-
-  #boards-button {
-    width: 15vh;
-  }
-  #favortie-button {
-    width: 15vh;
-  }
-  #log-out-button {
-    width: 15vh;
-  }
-}
-
 #main-content-container {
   display: flex;
   flex-direction: column;
@@ -205,11 +184,62 @@ body {
   overflow: auto;
 }
 
-@media only screen and (max-width: 816px) {
+@media only screen and (max-width: 1050px) {
+  #side-content-container {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 2em;
+    border-radius: 10px;
+  }
+
+  .main-content-buttons {
+    width: 15vh;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  #Boards-container {
+    width: 100%;
+    height: 100%;
+    padding: 0em;
+  }
+  #side-content-container {
+    width: 100%;
+    height: 12vh;
+    flex-direction: row;
+    padding: 0.3em;
+    gap: 0.4em;
+  }
+  .main-content-buttons {
+    padding-left: 0em;
+    justify-content: center;
+  }
   #main-content-container {
     height: 70vh;
   }
 }
+
+@media only screen and (max-height: 500px) {
+  #Boards-container {
+    flex-direction: row;
+  }
+  #side-content-container {
+    width: 30vh;
+    height: 65vh;
+  }
+  .main-content-buttons {
+    justify-content: center;
+    align-items: center;
+    padding-left: 0vh;
+  }
+  #main-content-container {
+    width: 90vh;
+    padding: 6vh;
+  }
+}
+
 
 #boards-title {
   width: 100%;
@@ -246,7 +276,7 @@ body {
   background-color: #242B43;
   position: relative;
   display: flex;
-  flex-direction: row;
+  flex-direction: row
 }
 
 #create-board-overlay {
@@ -295,13 +325,18 @@ body {
   width: 21vh;
   height: 10vh;
   font-size: 2.5vh;
+  flex-direction: column;
+  gap: 0.8vh;
+}
+
+#remaining-boards {
+  font-size: 1.4vh;
 }
 
 #board-button {
   width: 21vh;
   height: 10vh;
   font-size: 2.5vh;
-  /* background: url(../assets/board_background_images/img1.webp); */
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;

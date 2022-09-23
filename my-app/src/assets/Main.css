@@ -57,7 +57,7 @@ img {
 
 #main-title {
   text-align: left;
-  font-size: 5em;
+  font-size: 10vh;
   color: rgb(255, 255, 255);
 }
 
@@ -88,7 +88,7 @@ img {
   align-items: center;
   justify-content: center;
   color:rgb(250, 250, 250);
-  font-size: 1.2em;
+  font-size: 2.5vh;
   cursor: pointer;
   border: none;
 }
@@ -113,9 +113,16 @@ img {
   }
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 1400px) {
   #main-title {
-    font-size: 2em;
+    font-size: 5vh;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+
+  #main-title {
+    font-size: 5vh;
   }
   #main-text-container {
     width: 90%;
@@ -128,40 +135,27 @@ img {
   }
   #go_home {
     width: 20vh;
-    font-size: 1em;
+    font-size: 2vh;
   }
 }
 
-@media only screen and (max-height: 900px) {
+@media only screen and (max-height: 450px) {
   #go_home {
     width: 50vh;
-    font-size: 1em;
+    font-size: 4vh;
   }
   #main-title {
-    font-size: 2em;
+    font-size: 8vh;
   }
-  #create-account {
-    font-size: 0.8em;
-  }
-}
-
-@media only screen and (max-height: 400px) {
-  #go_home {
-    width: 50vh;
-    font-size: 1em;
-  }
-  #main-title {
-    font-size: 1em;
-  }
-  #create-account {
-    font-size: 0.8em;
-  }
-
+  
+  
   #main-description {
-    font-size: 0.6em;
+    font-size: 5vh;
   }
 
   #main-text-container {
-    gap: 2em;
+    gap: 12vh;
+    font-size: 5vh;
+    padding-left: 0em;
   }
 }

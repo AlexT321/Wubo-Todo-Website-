@@ -10,6 +10,7 @@ router.post("/Health-Website/create_user", (req, res) => {
     email: req.body.email,
     user_id: req.body.user_id,
     boards: req.body.boards,
+    boards_remaining: req.body.boards_remaining,
     date: req.body.date,
   };
   users.insert(user).then((information) => {
@@ -25,5 +26,23 @@ router.post("/Health-Website/get_user", (req, res) => {
     res.json(information);
   });
 });
+router.post("/Health-Website/reduce_remaining_boards", (req,res) => {
+  const remaining = {
+    user_id: req.body.user_id,
+    boards_remaining: req.body.boards_remaining,
+  };
+  users.update(remaining.user_id, remaining.boards_remaining).then((information) => {
+    res.json(information);
+  });
+});
+router.post("/Health-Website/increase_remaining_boards", (req, res) => {
+  const remaining = {
+    user_id: req.body.user_id,
+    boards_remaining: req.body.boards_remaining,
+  };
+  users.update(remaining.user, remaining.remaining).then((information) => {
+    res.json(information);
+  });
+})
 
 module.exports = router

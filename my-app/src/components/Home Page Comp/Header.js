@@ -1,6 +1,7 @@
 import { useAuth } from "../../context/AuthContext";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { User_Context } from "../../App";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -13,9 +14,11 @@ const Header = () => {
 
   const [profile_img, set_profile_img] = useState("");
 
+  const User = useContext(User_Context);
+
   const go_to_main_page = () => {
     navigate("/");
-  }
+  };
 
   const show_profile_overlay = () => {
     if (profile_vis === "hidden") {
@@ -47,56 +50,50 @@ const Header = () => {
 
   useEffect(() => {
     set_profile_img(currentUser.email.charAt(0).toUpperCase());
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  
   return (
     <div id="header">
       <div id="logo-container">
         <div id="logo" onClick={go_to_main_page}>
           <svg
-            xmlns="http://www.w3.org/2000/svg"
-            xmlSpace="preserve"
-            x="0"
-            y="0"
-            version="1.1"
             viewBox="0 0 100 100"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlnsXlink="https://vecta.io/nano"
+            id="logo-home"
           >
             <path
-              d="M82.59 21.76v10.51l-65.19.17V21.76c0-2.32 1.72-4.2 3.85-4.2h57.49c2.13 0 3.85 1.88 3.85 4.2z"
+              d="M100 6.5v16.3L0 23V6.5C0 2.9 2.6 0 5.9 0h88.2c3.3 0 5.9 2.9 5.9 6.5z"
               fill="#232c5f"
-              stroke="#0f1d39"
-              strokeMiterlimit="10"
             />
             <path
-              d="M82.59 32.27v45.96c0 2.32-1.72 4.2-3.85 4.2H21.25c-2.12 0-3.85-1.88-3.85-4.2V32.44l65.19-.17z"
+              d="M100 22.8v70.8c0 3.6-2.6 6.5-5.9 6.5H5.9c-3.3-.1-5.9-3-5.9-6.6V23l100-.2z"
               fill="#304a9b"
-              stroke="#23386d"
-              strokeMiterlimit="10"
             />
             <path
-              d="M35.07 73.66h-5.29a3.63 3.63 0 0 1-3.63-3.63V40.4a3.63 3.63 0 0 1 3.63-3.63h5.29a3.63 3.63 0 0 1 3.63 3.63v29.63c0 2-1.62 3.63-3.63 3.63zm17.95-17.85h-5.29a3.63 3.63 0 0 1-3.63-3.63V40.4a3.63 3.63 0 0 1 3.63-3.63h5.29a3.63 3.63 0 0 1 3.63 3.63v11.78a3.617 3.617 0 0 1-3.63 3.63zm18.01 10.36h-5.29a3.63 3.63 0 0 1-3.63-3.63V40.4a3.63 3.63 0 0 1 3.63-3.63h5.29a3.63 3.63 0 0 1 3.63 3.63v22.14c.01 2-1.62 3.63-3.63 3.63z"
+              d="M29 86.9H17c-2 0-3.6-1.6-3.6-3.6V33.4c0-2 1.6-3.6 3.6-3.6h12c2 0 3.6 1.6 3.6 3.6v49.9c.1 1.9-1.6 3.6-3.6 3.6zm27.6-27.7h-12c-2 0-3.6-1.6-3.6-3.6V33.4c0-2 1.6-3.6 3.6-3.6h12c2 0 3.6 1.6 3.6 3.6v22.2c0 2-1.6 3.6-3.6 3.6zm27.6 16.1h-12c-2 0-3.6-1.6-3.6-3.6V33.4c0-2 1.6-3.6 3.6-3.6h12c2 0 3.6 1.6 3.6 3.6v38.3c0 1.9-1.6 3.6-3.6 3.6z"
               fill="#6f9fd5"
-              stroke="#4c71b7"
-              strokeMiterlimit="10"
             />
           </svg>
         </div>
-        <div id="name" onClick={go_to_main_page}>Wubo</div>
+        <div id="name" onClick={go_to_main_page}>
+          Wubo
+        </div>
       </div>
       <div id="profile-container">
         <div
           id="profile-pic"
           onClick={show_profile_overlay}
           ref={profile_button_ref}
-        >{profile_img}</div>
+        >
+          {profile_img}
+        </div>
         <div
           id="home-profile-overlay"
           style={{ visibility: profile_vis }}
           ref={profile_overlay_ref}
         >
-          
           <div id="profile-header">
             <div id="profile-picture"></div>
             <div id="profile-name">{currentUser.email}</div>
