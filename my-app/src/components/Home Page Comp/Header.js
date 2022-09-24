@@ -1,7 +1,6 @@
 import { useAuth } from "../../context/AuthContext";
-import { useState, useRef, useEffect, useContext } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { User_Context } from "../../App";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -16,8 +15,6 @@ const Header = () => {
   const [profile_animation, set_profile_animation] = useState("none");
   const [open_or_close, set_open_or_close] = useState("open");
   const [profile_content_vis, set_profile_content_vis] = useState("hidden");
-
-  const User = useContext(User_Context);
 
   const go_to_main_page = () => {
     navigate("/");
@@ -60,7 +57,7 @@ const Header = () => {
       await logout();
       navigate("/login");
     } catch {
-      setError("Failed to log out");
+      setError("-Failed to log out");
     }
   };
 
@@ -120,7 +117,7 @@ const Header = () => {
               <div id="profile-name">{currentUser.email}</div>
             </div>
             <div id="log-out" onClick={log_out}>
-              Log out
+              Log out {error}
             </div>
           </div>
         </div>

@@ -115,6 +115,11 @@
   margin-bottom: 2em;
 }
 
+#fail-to-login {
+  font-size: 2vh;
+  color:rgb(212, 17, 17);
+}
+
 #login-button {
   margin-bottom: 0.2em;
 }
@@ -139,6 +144,16 @@
 
 #sign-up-button {
   margin-bottom: 25vh;
+}
+
+#password-does-not-match {
+  font-size: 1.8vh;
+  color:rgb(212, 17, 17);
+}
+
+#successfully-made-account {
+  font-size: 1.8vh;
+  color: rgb(13, 172, 26);
 }
 
 

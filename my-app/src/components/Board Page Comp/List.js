@@ -41,6 +41,8 @@ const List = forwardRef(
             "boards.$[i].board_lists.$[j].cards": {
               id: "C-" + random_number,
               name: card_name,
+              label_visibility: "none",
+              label_color: "none",
             },
           },
         },
@@ -69,6 +71,8 @@ const List = forwardRef(
                 {
                   id: "C-" + random_number,
                   name: card_name,
+                  label_visibility: "none",
+                  label_color: "none",
                 },
               ],
             },

@@ -26,7 +26,7 @@ const ProfileOverlay = ({
       await logout();
       navigate("/login");
     } catch {
-      setError("Failed to log out");
+      setError("-Failed to log out");
     }
   };
 
@@ -43,7 +43,7 @@ const ProfileOverlay = ({
           <div id="profile-name">{currentUser.email}</div>
         </div>
         <div id="log-out" onClick={log_out}>
-          Log out
+          Log out {error}
         </div>
       </div>
     </div>

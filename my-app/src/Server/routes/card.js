@@ -38,6 +38,28 @@ router.post("/Health-Website/add_card_to_list_at_position", (req, res) => {
   });
 });
 
+router.post("/Health-Website/update_label_visibility", (req, res) => {
+  const card = {
+    card_id: req.body.card_id,
+    card: req.body.card,
+    filter: req.body.filter,
+  }
+  users.update(card.card_id, card.card, card.filter).then((information) => {
+    res.json(information);
+  });
+
+router.post("/Health-Website/update_label_color", (req, res) => {
+  const card = {
+    card_id: req.body.card_id,
+    card: req.body.card,
+    filter: req.body.filter,
+  }
+  users.update(card.card_id, card.card, card.filter).then((information) => {
+    res.json(information)
+  })
+});
+})
+
 
 
 module.exports = router;

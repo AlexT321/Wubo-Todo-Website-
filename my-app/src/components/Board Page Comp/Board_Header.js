@@ -20,7 +20,7 @@ const Board_Header = ({
   const profile_button_ref = useRef();
 
   const [profile_img, set_profile_img] = useState("");
-  const [open_or_close, set_open_or_close] = useState("close");
+  const [open_or_close, set_open_or_close] = useState("open");
 
   const onClick = () => {
     navigate("/home");

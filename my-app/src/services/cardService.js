@@ -27,6 +27,18 @@ class CardService extends FetchService {
     );
     return response;
   }
+
+  async update_label_visibility(body) {
+    const options = this.createOption("POST", body);
+    const response =  await this.fetchData(API + "/card/Health-Website/update_label_visibility", options);
+    return response;
+  }
+  
+  async update_label_color(body) {
+    const options = this.createOption("POST", body);
+    const response = await this.fetchData(API + "/card/Health-Website/update_label_color", options);
+    return response;
+  }
 }
 
 export default new CardService();

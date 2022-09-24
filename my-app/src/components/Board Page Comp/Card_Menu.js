@@ -6,8 +6,6 @@ const Card_Menu = ({
   id,
   board_index,
   card_index,
-  set_card_label_vis,
-  set_card_label_color,
 }) => {
   const User = useContext(User_Context);
   const [label_color_vis, set_label_color_vis] = useState("none");
@@ -16,24 +14,87 @@ const Card_Menu = ({
     set_label_color_vis(label_color_vis === "none" ? "flex" : "none");
   };
 
+  function update_vis_color_of_card(visibility, color) {
+    const update_label_visibility = {
+      card_id: {user_id: User.user_id},
+      card: {$set: {"boards.$[i].board_lists.$[j].cards.$[k].label_visibility": `${visibility}`}},
+      filter: {arrayFilters: [
+        {
+          "i.board_id": User.single_board_info[0].board_id,
+        },
+        {
+          "j.unique_id": User.single_board_info[0].board_lists[board_index].unique_id,
+        },
+        {
+          "k.id": User.single_board_info[0].board_lists[board_index].cards[card_index].id,
+        }
+      ]}
+    }
+    CardService.update_label_visibility(update_label_visibility);
+    const update_label_color = {
+      card_id: {user_id: User.user_id},
+      card: {$set: {"boards.$[i].board_lists.$[j].cards.$[k].label_color": `${color}`}},
+      filter: {arrayFilters: [
+        {
+          "i.board_id": User.single_board_info[0].board_id,
+        },
+        {
+          "j.unique_id": User.single_board_info[0].board_lists[board_index].unique_id,
+        },
+        {
+          "k.id": User.single_board_info[0].board_lists[board_index].cards[card_index].id,
+        }
+      ]}
+    }
+    CardService.update_label_color(update_label_color);
+
+    User.set_single_board_info([
+      {
+        ...User.single_board_info[0],
+        board_lists: [
+          ...User.single_board_info[0].board_lists.slice(
+            0,
+            board_index
+          ),
+          {
+            ...User.single_board_info[0].board_lists[board_index],
+            cards: [
+              ...User.single_board_info[0].board_lists[board_index].cards.slice(
+                0,
+                card_index
+              ),
+              {
+                ...User.single_board_info[0].board_lists[board_index].cards[card_index],
+                label_visibility: `${visibility}`,
+                label_color: `${color}`,
+              },
+              ...User.single_board_info[0].board_lists[board_index].cards.slice(
+                card_index + 1
+              ),
+            ]
+          },
+          ...User.single_board_info[0].board_lists.slice(
+            board_index + 1
+          ),
+        ],
+      },
+    ]);
+  }
+
   const turn_label_green = () => {
-    set_card_label_vis("flex");
-    set_card_label_color("#1ab4a7");
+    update_vis_color_of_card("flex","#1ab4a7");
   };
 
   const turn_label_red = () => {
-    set_card_label_vis("flex");
-    set_card_label_color("#d60b0b");
+    update_vis_color_of_card("flex","#d60b0b");
   };
 
   const turn_label_yellow = () => {
-    set_card_label_vis("flex");
-    set_card_label_color("#f1e313");
+    update_vis_color_of_card("flex","#f1e313");
   };
 
   const reset_label_colors = () => {
-    set_card_label_vis("none");
-    set_card_label_color("none");
+    update_vis_color_of_card("none","none");
   };
 
   const delete_card = () => {

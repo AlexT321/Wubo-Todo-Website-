@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-pascal-case */
-import { useState, useRef, forwardRef } from "react";
+import { useState, useRef, forwardRef, useContext } from "react";
+import { User_Context } from "../../App";
 import Card_Menu from "./Card_Menu";
 
 const Card = forwardRef(
@@ -10,11 +11,11 @@ const Card = forwardRef(
     const [hover_state, set_hover_state] = useState(false);
     const [edit_button_vis, set_edit_button_vis] = useState("none");
     const [card_menu_vis, set_card_menu_vis] = useState("none");
-    const [card_label_vis, set_card_label_vis] = useState("none");
-    const [card_label_color, set_card_label_color] = useState("");
 
     const card_menu_ref = useRef(null);
     const edit_button_ref = useRef(null);
+
+    const User = useContext(User_Context);
 
     const toggleHover = () => {
       set_hover_state(hover_state ? false : true);
@@ -34,7 +35,6 @@ const Card = forwardRef(
       }
     };
     document.addEventListener("click", handleClickOutside);
-
     return (
       <div id="card-container">
         <ul
@@ -46,8 +46,6 @@ const Card = forwardRef(
             id={id}
             board_index={board_index}
             card_index={card_index}
-            set_card_label_vis={set_card_label_vis}
-            set_card_label_color={set_card_label_color}
           />
         </ul>
         <li
@@ -60,7 +58,16 @@ const Card = forwardRef(
         >
           <div id="card-main-content">
             <div id="card-title">{name}</div>
-            <div id="card-label" style={{display: card_label_vis, backgroundColor: card_label_color}}></div>
+            <div
+              id="card-label"
+              style={{
+                display:
+                  User.single_board_info[0].board_lists[board_index].cards[
+                    card_index
+                  ].label_visibility,
+                backgroundColor: User.single_board_info[0].board_lists[board_index].cards[card_index].label_color,
+              }}
+            ></div>
           </div>
 
           <button

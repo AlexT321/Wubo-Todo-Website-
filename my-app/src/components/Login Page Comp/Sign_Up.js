@@ -12,8 +12,7 @@ const Sign_Up = () => {
   const { signup } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  //const [success, setSuccess] = useState(false);
-  //const [user_id, set_user_id] = useState("");
+  const [success, set_success] = useState("");
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -36,6 +35,7 @@ const Sign_Up = () => {
       };
       UserService.create_user(user);
       console.log("success");
+      set_success("Successfully created an account")
     } catch (error) {
       console.log(error);
       setError("Failed to create an account");
@@ -70,7 +70,7 @@ const Sign_Up = () => {
       </svg>
 
       <h1 id="login-title">Sign up</h1>
-      {error && <div id="password-does-not-match">{error}</div>}
+      {success && <div id="successfully-made-account">{success}</div>}
       <div className="login-containers" id="email-container">
         <div className="login-input-titles" id="email-title">
           Email:
@@ -93,6 +93,7 @@ const Sign_Up = () => {
           ref={passwordRef}
         />
       </div>
+      {error && <div id="password-does-not-match">Password Does Not Match</div>}
       <div className="login-containers" id="confirm-password-container">
         <div className="login-input-titles" id="confirm-password-title">
           Confirm Password:
@@ -104,6 +105,7 @@ const Sign_Up = () => {
           ref={comfirmPasswordRef}
         />
       </div>
+      {error && <div id="password-does-not-match">Password Does Not Match</div>}
       <button
         className="login-buttons"
         id="sign-up-button"
