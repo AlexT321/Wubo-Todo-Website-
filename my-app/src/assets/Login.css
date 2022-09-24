@@ -103,6 +103,10 @@
   cursor: pointer;
 }
 
+.login-buttons:hover {
+  background: #414e75;
+}
+
 #login-title {
   font-size: 5vh;
   font-weight: normal;
@@ -136,6 +140,7 @@
 #sign-up-button {
   margin-bottom: 25vh;
 }
+
 
 #sign-up-go-back:hover {
   text-decoration: underline;

@@ -4,11 +4,13 @@ import Menu_Boards from "./Menu_Boards";
 import { useContext, useState, useRef } from "react";
 import { User_Context } from "../../App";
 import BoardService from "../../services/boardService";
+import UserService from "../../services/userService";
 
 const Side_Menu = ({
   Side_Menu_Visibility,
-  Set_Side_Menu_Visibility,
-  set_move_content_to_right,
+  side_menu_animation,
+  set_side_menu_animation,
+  set_content_body_animation,
 }) => {
   const User = useContext(User_Context);
   const navigate = useNavigate();
@@ -21,9 +23,14 @@ const Side_Menu = ({
   
   //close menu button
   const close_menu = () => {
-    Set_Side_Menu_Visibility("hidden");
+    set_side_menu_animation("close-side-menu 0.4s linear")
     set_add_board_visibility("hidden");
-    set_move_content_to_right("0vh");
+    
+    set_content_body_animation("move-content-left 0.4s linear");
+  }
+
+  const menu_animation = () => {;
+    set_side_menu_animation("none");
   }
 
   //Home Button
@@ -53,7 +60,18 @@ const Side_Menu = ({
   document.addEventListener("click", handleClickOutside);
 
   const added_board = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && User.single_user_info[0].boards_remaining > 0) {
+      const reduce_remaining_boards = {
+        user_id: {user_id: User.user_id},
+        boards_remaining: {$inc: {boards_remaining: -1}}
+      }
+      UserService.reduce_remaining_boards(reduce_remaining_boards);
+      User.set_single_user_info([
+        {
+          ...User.single_user_info[0],
+          boards_remaining: User.single_user_info[0].boards_remaining - 1,
+        },
+      ]);
       const random_number = Math.floor(Math.random() * 100)
       const board_info = {
         id: { user_id: User.user_id },
@@ -62,6 +80,7 @@ const Side_Menu = ({
             boards: {
               board_id: "B" + random_number,
               name: e.target.value,
+              board_background_img: `img${User.multiple_board_info.length + 1}`,
               choosen: false,
               favorite: false,
               board_lists: [],
@@ -74,12 +93,12 @@ const Side_Menu = ({
       User.multiple_board_info.push({
         board_id: "B" + random_number,
         name: e.target.value,
+        board_background_img: `img${User.multiple_board_info.length + 1}`,
         choosen: false,
         favorite: false,
         board_lists: [],
         date: new Date(),
       });
-      User.load_board_data();
       add_board_ref.current.value = "";
       set_add_board_visibility("hidden");
     }
@@ -103,10 +122,10 @@ const Side_Menu = ({
   }
 
   return (
-    <div id="menu-overlay" style={{ visibility: Side_Menu_Visibility }}>
+    <div id="menu-overlay" style={{ visibility: Side_Menu_Visibility, animation: side_menu_animation }} onAnimationEnd={menu_animation}>
       <div id="menu-header">
         <div id="menu-board-name">{User.single_board_info[0].name}</div>
-        <button className={"btn btn--primary--solid btn--tiny"} id="close-menu-button" onClick={close_menu}>-</button>
+        <button className={"btn btn--primary--solid btn--tiny"} id="close-menu-button" onClick={close_menu} >-</button>
       </div>
       <div id="home-button" onClick={go_to_home_page}>Home</div>
       <div id="menu-header2">

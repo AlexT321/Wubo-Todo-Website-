@@ -13,6 +13,9 @@ const Header = () => {
   const profile_overlay_ref = useRef();
 
   const [profile_img, set_profile_img] = useState("");
+  const [profile_animation, set_profile_animation] = useState("none");
+  const [open_or_close, set_open_or_close] = useState("open");
+  const [profile_content_vis, set_profile_content_vis] = useState("hidden");
 
   const User = useContext(User_Context);
 
@@ -21,11 +24,22 @@ const Header = () => {
   };
 
   const show_profile_overlay = () => {
-    if (profile_vis === "hidden") {
-      set_profile_vis("visible");
-    } else {
-      set_profile_vis("hidden");
+    if (profile_animation === "none") {
+      set_profile_content_vis(
+        profile_content_vis === "hidden" ? "visible" : "hidden"
+      );
+      set_profile_animation(
+        open_or_close === "open"
+          ? "open-profile-overlay 0.4s linear"
+          : "close-profile-overlay 0.4s linear"
+      );
+      set_open_or_close(open_or_close === "close" ? "open" : "close");
     }
+  };
+
+  const profile_animation_end = () => {
+    set_profile_animation("none");
+    set_profile_vis(profile_vis === "hidden" ? "visible" : "hidden");
   };
 
   const handleClickOutside = (e) => {
@@ -35,6 +49,8 @@ const Header = () => {
       !profile_button_ref.current.contains(e.target)
     ) {
       set_profile_vis("hidden");
+      set_open_or_close("open");
+      set_profile_content_vis("hidden");
     }
   };
   document.addEventListener("click", handleClickOutside);
@@ -91,15 +107,21 @@ const Header = () => {
         </div>
         <div
           id="home-profile-overlay"
-          style={{ visibility: profile_vis }}
+          style={{ visibility: profile_vis, animation: profile_animation }}
+          onAnimationEnd={profile_animation_end}
           ref={profile_overlay_ref}
         >
-          <div id="profile-header">
-            <div id="profile-picture"></div>
-            <div id="profile-name">{currentUser.email}</div>
-          </div>
-          <div id="log-out" onClick={log_out}>
-            Log out
+          <div
+            id="inner-profile-content"
+            style={{ visibility: profile_content_vis }}
+          >
+            <div id="profile-header">
+              <div id="profile-picture"></div>
+              <div id="profile-name">{currentUser.email}</div>
+            </div>
+            <div id="log-out" onClick={log_out}>
+              Log out
+            </div>
           </div>
         </div>
       </div>

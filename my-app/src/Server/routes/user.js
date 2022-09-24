@@ -40,7 +40,7 @@ router.post("/Health-Website/increase_remaining_boards", (req, res) => {
     user_id: req.body.user_id,
     boards_remaining: req.body.boards_remaining,
   };
-  users.update(remaining.user, remaining.remaining).then((information) => {
+  users.update(remaining.user_id, remaining.boards_remaining).then((information) => {
     res.json(information);
   });
 })

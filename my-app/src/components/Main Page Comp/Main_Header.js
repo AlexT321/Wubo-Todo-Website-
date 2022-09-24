@@ -32,7 +32,7 @@ const Main_Header = () => {
         </div>
         <div id="name">Wubo</div>
       </div>
-      <button id="go_home" onClick={go_to_boards_button}>Go to your boards -{">"}</button>
+      <button id="go-home" onClick={go_to_boards_button}>Go to your boards -{">"}</button>
     </div>
   );
 };

@@ -7,8 +7,11 @@ import { useAuth } from "../../context/AuthContext";
 
 const Board_Header = ({
   set_profile_overlay_vis,
-  profile_vis,
   profile_ref,
+  profile_animation,
+  set_profile_animation,
+  profile_content_vis,
+  set_profile_content_vis,
 }) => {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
@@ -17,16 +20,17 @@ const Board_Header = ({
   const profile_button_ref = useRef();
 
   const [profile_img, set_profile_img] = useState("");
+  const [open_or_close, set_open_or_close] = useState("close");
 
   const onClick = () => {
     navigate("/home");
   };
 
   const show_profile_overlay = () => {
-    if (profile_vis === "hidden") {
-      set_profile_overlay_vis("visible");
-    } else {
-      set_profile_overlay_vis("hidden");
+    if (profile_animation === "none") {
+      set_profile_content_vis(profile_content_vis === "hidden" ? "visible": "hidden");
+      set_profile_animation(open_or_close === "open"? "open-profile-overlay 0.4s linear": "close-profile-overlay 0.4s linear");
+      set_open_or_close(open_or_close === "close" ? "open": "close");
     }
   };
 
@@ -36,7 +40,9 @@ const Board_Header = ({
       !profile_button_ref.current.contains(e.target) &&
       !profile_ref.current.contains(e.target)
     ) {
+      set_open_or_close("open");
       set_profile_overlay_vis("hidden");
+      set_profile_content_vis("hidden");
     }
   };
   document.addEventListener("click", handleClickOutside);

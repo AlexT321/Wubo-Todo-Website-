@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { User_Context } from "../../App";
 import {useContext} from "react";
 import BoardService from "../../services/boardService";
+import UserService from "../../services/userService";
 
 const Board = ({
   name,
@@ -31,6 +32,18 @@ const Board = ({
   };
   
   const delete_board = () => {
+    const increase_remaining_boards =  {
+      user_id: {user_id: User.user_id},
+      boards_remaining: {$inc: {boards_remaining: 1} },
+    }
+    UserService.increase_remaining_boards(increase_remaining_boards);
+    User.set_single_user_info([
+      {
+        ...User.single_user_info[0],
+        boards_remaining: User.single_user_info[0].boards_remaining + 1,
+      }
+    ]);
+    
     const boards_info = {
       id: { user_id: User.user_id},
       board: { $pull: {boards: {board_id: unique_id}} },

@@ -75,6 +75,10 @@ body {
   font-size: 4.5vh;
 }
 
+#profile-pic:hover {
+  background-color: #5a6af5;
+}
+
 #home-profile-overlay {
   position: absolute;
   width: 22vh;
@@ -89,7 +93,9 @@ body {
   flex-direction: column;
   gap: 4vh;
   z-index: 1;
+  overflow: hidden;
 }
+
 
 #log-out {
   font-size: 1.8vh;
@@ -170,6 +176,10 @@ body {
   border: none;
   cursor: pointer;
   padding-left: 2rem;
+}
+
+.main-content-buttons:hover {
+  background-color: #4d62ac;
 }
 
 #main-content-container {
@@ -302,6 +312,12 @@ body {
   padding: 1em;
 }
 
+.create-board:focus {
+  outline: none;
+  border: #808080 solid 1px;
+
+}
+
 .content-buttons {
   display: flex;
   justify-content: center;
@@ -312,6 +328,10 @@ body {
   background-color: #46599e;
   font-family: "Roboto", sans-serif;
   border-radius: 20px;
+}
+
+.content-buttons:hover {
+  background-color: #4d62ac;
 }
 
 #create-board-button {

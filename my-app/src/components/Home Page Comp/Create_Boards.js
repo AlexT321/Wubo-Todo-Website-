@@ -53,81 +53,62 @@ const Create_Board_Button = () => {
   };
 
   const create_boards = async () => {
-
-    // const reduce_remaining_boards = {
-    // user_id: { user_id: currentUser.uid },
-    // boards_remaining: { $inc: { boards_remaining: -1 } },
-    // };
-    // console.log(User.single_user_info[0].boards_remaining);
-    // UserService.reduce_remaining_boards(reduce_remaining_boards);
-    // User.set_single_user_info([
-    // {
-    // ...User.single_user_info[0],
-    // boards_remaining: User.single_user_info[0].boards_remaining - 1,
-    // },
-    // ]);
-
-    // console.log(User.single_user_info[0].boards_remaining);
-
-    const random_number = Math.floor(Math.random() * 100);
-
-    // User.boards.push({
-    // board_id: "B" + random_number,
-    // name: board_name,
-    // board_background_img: `img${User.multiple_board_info.length + 1}`,
-    // choosen: false,
-    // favorite: false,
-    // board_lists: [],
-    // date: new Date(),
-    // });
-
-    User.set_boards([
-      ...User.boards,
-      {
-        board_id: "B" + random_number,
-        name: board_name,
-        board_background_img: `img${User.multiple_board_info.length + 1}`,
-        choosen: false,
-        favorite: false,
-        board_lists: [],
-        date: new Date(),
-      },
-    ]);
-
-    const board_info = {
-      id: { user_id: currentUser.uid },
-      board_info: {
-        $push: {
-          boards: {
-            board_id: "B" + random_number,
-            name: board_name,
-            board_background_img: `img${User.multiple_board_info.length + 1}`,
-            choosen: false,
-            favorite: false,
-            board_lists: [],
-            date: new Date(),
+    if (User.single_user_info[0].boards_remaining > 0) {
+      const reduce_remaining_boards = {
+        user_id: { user_id: currentUser.uid },
+        boards_remaining: { $inc: { boards_remaining: -1 } },
+      };
+      UserService.reduce_remaining_boards(reduce_remaining_boards);
+      User.set_single_user_info([
+        {
+          ...User.single_user_info[0],
+          boards_remaining: User.single_user_info[0].boards_remaining - 1,
+        },
+      ]);
+      const random_number = Math.floor(Math.random() * 100);
+      User.set_boards([
+        ...User.boards,
+        {
+          board_id: "B" + random_number,
+          name: board_name,
+          board_background_img: `img${User.multiple_board_info.length + 1}`,
+          choosen: false,
+          favorite: false,
+          board_lists: [],
+          date: new Date(),
+        },
+      ]);
+      const board_info = {
+        id: { user_id: currentUser.uid },
+        board_info: {
+          $push: {
+            boards: {
+              board_id: "B" + random_number,
+              name: board_name,
+              board_background_img: `img${User.multiple_board_info.length + 1}`,
+              choosen: false,
+              favorite: false,
+              board_lists: [],
+              date: new Date(),
+            },
           },
         },
-      },
-    };
-
-    BoardService.create_board(board_info);
-    setBoard_name("");
-    User.set_multiple_board_info([
-      ...User.multiple_board_info,
-      {
-        board_id: "B" + random_number,
-        name: board_name,
-        board_background_img: `img${User.multiple_board_info.length + 1}`,
-        choosen: false,
-        favorite: false,
-        board_lists: [],
-        date: new Date(),
-      },
-    ]);
-
-    User.load_board_data();
-    console.log(User.boards);
+      };
+      BoardService.create_board(board_info);
+      setBoard_name("");
+      User.set_multiple_board_info([
+        ...User.multiple_board_info,
+        {
+          board_id: "B" + random_number,
+          name: board_name,
+          board_background_img: `img${User.multiple_board_info.length + 1}`,
+          choosen: false,
+          favorite: false,
+          board_lists: [],
+          date: new Date(),
+        },
+      ]);
+    }
 
     setVisibilityState_input("hidden");
     setVisibilityState("visible");
