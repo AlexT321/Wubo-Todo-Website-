@@ -1,7 +1,7 @@
 **Version 1.0.0**
 
-# Health-Website
-A health website that allows you to organize your workout routines and manage your diet.
+# Wubo (Todd Website)
+A Todo website that allows you to organize your tasks and manage your scheduale.
 
 write motivation here -
 
