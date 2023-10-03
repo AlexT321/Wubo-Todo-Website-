@@ -1,7 +1,7 @@
 **Version 1.0.0**
 
 # Wubo (Todd Website)
-A Todo website that allows you to organize your tasks and manage your scheduale.
+A Todo website that allows you to organize your tasks and manage your schedule.
 
 write motivation here -
 
