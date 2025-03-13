@@ -28,12 +28,16 @@ function App() {
   const [user_id, set_user_id] = useState("");
 
   const [boards, set_boards] = useState([]);
+  //console.log("hello");
 
   const load_board_data = async () => {
     const user = {
       user_id: {user_id: user_id},
     };
     const user_data = await UserService.loadUserData(user);
+    console.log(user_data);
+    console.log(user_id);
+    console.log("hello");
     if (user_id !== "") {
       set_single_board_data(user_data[0].boards.filter((boards) => boards.choosen === true));
       set_single_user_data(user_data);

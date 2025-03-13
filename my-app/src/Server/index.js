@@ -1,7 +1,9 @@
 const express = require("express");
 const cors = require("cors");
+const cardRoutes = require("./routes/card");
+
 const app = express();
-const PORT = process.env.PORT || 5000;
+const port = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
@@ -17,10 +19,9 @@ app.use("/board", boardRouter);
 const listRouter = require("./routes/list");
 app.use("/list", listRouter);
 
-const cardRouter = require("./routes/card");
-app.use("/card", cardRouter);
+// Use the card routes
+app.use("/card", cardRoutes);
 
-
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+app.listen(port, () => {
+  console.log(`Server is running on port: ${port}`);
 });

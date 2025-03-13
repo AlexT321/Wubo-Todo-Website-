@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-pascal-case */
-import { useState, useRef, useContext, forwardRef } from "react";
+import { useState, useRef, useContext, forwardRef, useEffect } from "react";
 import { User_Context } from "../../App";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import List_Menu from "./List_Menu";
@@ -107,7 +107,13 @@ const List = forwardRef(
         set_list_menu_vis("none");
       }
     };
-    document.addEventListener("click", handleClickOutside);
+
+    useEffect(() => {
+      document.addEventListener("click", handleClickOutside);
+      return () => {
+        document.removeEventListener("click", handleClickOutside);
+      };
+    }, []);
 
     if (
       User.multiple_board_info.length === 0 ||

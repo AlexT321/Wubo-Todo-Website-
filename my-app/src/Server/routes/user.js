@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const monk = require("monk");
 
-const db = monk(process.env.MONGO_URI || "mongodb://localhost:27017/Health-Website");
+const db = monk(process.env.MONGO_URI || "mongodb://127.0.0.1:27017/Health-Website");
 const users = db.get("Users");
 
 router.post("/Health-Website/create_user", (req, res) => {
@@ -46,3 +46,9 @@ router.post("/Health-Website/increase_remaining_boards", (req, res) => {
 })
 
 module.exports = router
+//check if the database is connected
+db.then(() => {
+  console.log("Connected correctly to server");
+  }).catch((err) => {
+    console.log(err);
+    });
